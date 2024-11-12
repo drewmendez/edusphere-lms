@@ -1,10 +1,16 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiClient } from "./apiClient";
-import { SignInForm, SignUpForm } from "@/types/types";
+import {
+  ApiResponse,
+  CurrentUser,
+  SignInForm,
+  SignUpForm,
+} from "@/types/types";
+import { AxiosError } from "axios";
 
 export const useSignUp = () => {
-  return useMutation({
-    mutationFn: async (userData: SignUpForm) => {
+  return useMutation<ApiResponse, AxiosError<ApiResponse>, SignUpForm>({
+    mutationFn: async (userData) => {
       const { data } = await apiClient.post("/auth/sign-up", userData);
       return data;
     },
@@ -12,8 +18,8 @@ export const useSignUp = () => {
 };
 
 export const useSignIn = () => {
-  return useMutation({
-    mutationFn: async (credentials: SignInForm) => {
+  return useMutation<ApiResponse, AxiosError<ApiResponse>, SignInForm>({
+    mutationFn: async (credentials) => {
       const { data } = await apiClient.post("/auth/sign-in", credentials);
       return data;
     },
@@ -21,7 +27,7 @@ export const useSignIn = () => {
 };
 
 export const useSignOut = () => {
-  return useMutation({
+  return useMutation<ApiResponse, AxiosError<ApiResponse>>({
     mutationFn: async () => {
       const { data } = await apiClient.post("/auth/sign-out");
       return data;
@@ -30,7 +36,7 @@ export const useSignOut = () => {
 };
 
 export const useGetCurrentUser = () => {
-  return useQuery({
+  return useQuery<CurrentUser | null>({
     queryKey: ["current-user"],
     queryFn: async () => {
       try {

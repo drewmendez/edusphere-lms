@@ -4,15 +4,33 @@ import {
   useSignOut,
   useSignUp,
 } from "@/services/authServices";
-import { SignInForm, SignUpForm } from "@/types/types";
+import {
+  ApiResponse,
+  CurrentUser,
+  SignInForm,
+  SignUpForm,
+} from "@/types/types";
 import { UseMutationResult, UseQueryResult } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { createContext, ReactNode, useContext } from "react";
 
 interface AuthContext {
-  signUpMutation: UseMutationResult<any, Error, SignUpForm, unknown>;
-  signInMutation: UseMutationResult<any, Error, SignInForm, unknown>;
-  signOutMutation: UseMutationResult<any, Error, void, unknown>;
-  currentUserQuery: UseQueryResult<any, Error>;
+  signUpMutation: UseMutationResult<
+    ApiResponse,
+    AxiosError<ApiResponse>,
+    SignUpForm
+  >;
+  signInMutation: UseMutationResult<
+    ApiResponse,
+    AxiosError<ApiResponse>,
+    SignInForm
+  >;
+  signOutMutation: UseMutationResult<
+    ApiResponse,
+    AxiosError<ApiResponse>,
+    void
+  >;
+  currentUserQuery: UseQueryResult<CurrentUser | null>;
 }
 
 const AuthContext = createContext<AuthContext | null>(null);

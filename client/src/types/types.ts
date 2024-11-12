@@ -16,3 +16,15 @@ export const SignInFormSchema = z.object({
 });
 
 export type SignInForm = z.infer<typeof SignInFormSchema>;
+
+export type ApiResponse = {
+  success: boolean;
+  error?: string;
+  message: string;
+};
+
+export type CurrentUser = {
+  user_id: number;
+  user: string;
+  role: string;
+};

@@ -13,7 +13,6 @@ import { SignInForm, SignInFormSchema } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
-import axios, { AxiosError } from "axios";
 
 export default function SignInPage() {
   const { signInMutation, currentUserQuery } = useAuth();
@@ -35,19 +34,17 @@ export default function SignInPage() {
         currentUserQuery.refetch();
         navigate("/dashboard", { replace: true });
       },
-      onError: (error: Error | AxiosError) => {
-        if (axios.isAxiosError(error)) {
-          if (error.response?.data.error === "email") {
-            setError("email", {
-              type: "server",
-              message: error.response.data.message,
-            });
-          } else {
-            setError("password", {
-              type: "server",
-              message: error.response?.data.message,
-            });
-          }
+      onError: (error) => {
+        if (error.response?.data.error === "email") {
+          setError("email", {
+            type: "server",
+            message: error.response.data.message,
+          });
+        } else if (error.response?.data.error === "password") {
+          setError("password", {
+            type: "server",
+            message: error.response?.data.message,
+          });
         } else {
           setError("root", {
             type: "server",

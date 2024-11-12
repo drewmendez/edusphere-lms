@@ -7,7 +7,11 @@ import { ArrowRight } from "lucide-react";
 export default function HomePage() {
   return (
     <>
-      <Navbar />
+      <header className="bg-bgWhite fixed inset-x-0 top-0 py-4 shadow">
+        <div className="container">
+          <Navbar />
+        </div>
+      </header>
       <main className="h-screen bg-[#EEEFF2] pt-[68px]">
         <div className="container flex h-full items-center justify-center">
           <section className="flex flex-col items-center gap-10 md:flex-row">
