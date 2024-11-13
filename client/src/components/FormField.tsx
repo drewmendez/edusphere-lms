@@ -11,8 +11,8 @@ interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const FormField = React.forwardRef<HTMLInputElement, FormFieldProps>(
   ({ label, error, ...props }, ref) => {
     return (
-      <div>
-        <Label>{label} *</Label>
+      <div className="space-y-1">
+        <Label>{label}</Label>
         <Input
           className={cn(error && "border-red-600 focus-visible:ring-0")}
           ref={ref}

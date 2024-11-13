@@ -3,6 +3,7 @@ import Logo from "../assets/logo.png";
 import { Button } from "./ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { Menu, Plus } from "lucide-react";
+import CreateClass from "./CreateClass";
 
 interface NavbarProps {
   setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -26,9 +27,7 @@ export default function Navbar({ setIsOpen }: NavbarProps) {
         {currentUserQuery.data ? (
           <>
             {currentUserQuery.data.role === "teacher" ? (
-              <Button>
-                Create class <Plus />
-              </Button>
+              <CreateClass />
             ) : (
               <Button>
                 Join class
@@ -38,10 +37,10 @@ export default function Navbar({ setIsOpen }: NavbarProps) {
           </>
         ) : (
           <>
-            <Button variant="outline">
+            <Button variant="outline" asChild>
               <Link to="/sign-up">Sign Up</Link>
             </Button>
-            <Button>
+            <Button asChild>
               <Link to="/sign-in">Sign In</Link>
             </Button>
           </>

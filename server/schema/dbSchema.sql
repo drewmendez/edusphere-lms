@@ -9,8 +9,10 @@ CREATE TABLE users (
 
 CREATE TABLE classes (
   class_id INT PRIMARY KEY AUTO_INCREMENT,
-  class_name VARCHAR(50),
+  class_subject VARCHAR(50),
   class_code VARCHAR(6),
+  banner_color VARCHAR(7),
+  class_section VARCHAR(50),
   teacher_id INT,
   FOREIGN KEY (teacher_id) REFERENCES users(user_id)
 );

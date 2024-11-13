@@ -17,6 +17,13 @@ export const SignInFormSchema = z.object({
 
 export type SignInForm = z.infer<typeof SignInFormSchema>;
 
+export const ClassFormSchema = z.object({
+  class_subject: z.string().trim().min(1, "This field is required"),
+  class_section: z.string().trim().min(1, "This field is required"),
+});
+
+export type ClassForm = z.infer<typeof ClassFormSchema>;
+
 export type ApiResponse = {
   success: boolean;
   error?: string;
@@ -26,5 +33,17 @@ export type ApiResponse = {
 export type CurrentUser = {
   user_id: number;
   user: string;
-  role: string;
+  role: "teacher" | "student";
+};
+
+export type Class = {
+  class_id: number;
+  class_subject: string;
+  class_code: string;
+  banner_color: string;
+  class_section: string;
+};
+
+export type Student = {
+  student_id: number;
 };
