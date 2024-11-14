@@ -24,6 +24,12 @@ export const ClassFormSchema = z.object({
 
 export type ClassForm = z.infer<typeof ClassFormSchema>;
 
+export const ClassCodeFormSchema = z.object({
+  class_code: z.string().trim().min(6, "Class codes are 6 characters long"),
+});
+
+export type ClassCodeForm = z.infer<typeof ClassCodeFormSchema>;
+
 export type ApiResponse = {
   success: boolean;
   error?: string;
@@ -42,6 +48,7 @@ export type Class = {
   class_code: string;
   banner_color: string;
   class_section: string;
+  class_teacher?: string;
 };
 
 export type Student = {

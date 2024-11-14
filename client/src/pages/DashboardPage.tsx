@@ -1,7 +1,9 @@
 import ClassDropdown from "@/components/ClassDropdown";
+import { useAuth } from "@/context/AuthContext";
 
 import { useGetClasses } from "@/services/classesServices";
 import { useGetStudentsInClass } from "@/services/enrollmentsServices";
+import { Class } from "@/types/types";
 
 export default function DashboardPage() {
   const { data: classes } = useGetClasses();
@@ -15,13 +17,7 @@ export default function DashboardPage() {
   );
 }
 
-interface ClassCardProps {
-  class_id: number;
-  class_subject: string;
-  class_code: string;
-  banner_color: string;
-  class_section: string;
-}
+type ClassCardProps = Class;
 
 function ClassCard({
   class_id,
@@ -29,8 +25,11 @@ function ClassCard({
   class_code,
   banner_color,
   class_section,
+  class_teacher,
 }: ClassCardProps) {
   const { data: students } = useGetStudentsInClass(class_id);
+  const { currentUserQuery } = useAuth();
+  const role = currentUserQuery.data?.role;
 
   return (
     <div className="flex h-[296px] w-[302px] flex-col overflow-hidden rounded-xl border-2">
@@ -38,9 +37,10 @@ function ClassCard({
         className="flex justify-between p-5 text-white"
         style={{ background: banner_color }}
       >
-        <div className="space-y-2">
+        <div className="space-y-1">
           <p className="line-clamp-1 text-2xl">{class_subject}</p>
-          <p>{class_section}</p>
+          <p className="text-sm">{class_section}</p>
+          {role === "student" && <p>{class_teacher}</p>}
         </div>
         <ClassDropdown
           class_id={class_id}
@@ -49,16 +49,19 @@ function ClassCard({
         />
       </div>
       <div className="flex flex-1 flex-col justify-between p-5 text-slate-600">
-        <p className="text-sm">
-          Class code:{" "}
-          <span className="text-xl font-semibold">{class_code}</span>
-        </p>
-        <div>
+        {role === "teacher" && (
+          <p className="text-sm">
+            Class code:{" "}
+            <span className="text-lg font-semibold">{class_code}</span>
+          </p>
+        )}
+
+        <div className="mt-auto text-sm">
           <p>
-            <span className="text-2xl">22</span> Assignments
+            <span className="text-base">22</span> Assignments
           </p>
           <p>
-            <span className="text-2xl">{students?.length}</span> Students
+            <span className="text-base">{students?.length}</span> Students
             enrolled
           </p>
         </div>

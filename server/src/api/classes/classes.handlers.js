@@ -5,6 +5,7 @@ import {
 import {
   createClass,
   deleteClass,
+  getClassesForStudentRole,
   getClassesForTeacherRole,
   updateClass,
 } from "./classes.services.js";
@@ -13,10 +14,21 @@ export const handleGetClasses = async (req, res) => {
   const role = req.user.role;
 
   try {
-    const teacher_id = parseInt(req.params.user_id);
+    const user_id = parseInt(req.params.user_id);
 
     if (role === "teacher") {
-      const classes = await getClassesForTeacherRole(teacher_id);
+      const classes = await getClassesForTeacherRole(user_id);
+
+      return res.status(200).json(classes);
+    } else {
+      const result = await getClassesForStudentRole(user_id);
+      const classes = result.map((item) => ({
+        class_id: item.class_id,
+        class_subject: item.class_subject,
+        banner_color: item.banner_color,
+        class_section: item.class_section,
+        class_teacher: `${item.firstname} ${item.lastname}`,
+      }));
 
       return res.status(200).json(classes);
     }

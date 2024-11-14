@@ -2,8 +2,9 @@ import { Link, useLocation } from "react-router-dom";
 import Logo from "../assets/logo.png";
 import { Button } from "./ui/button";
 import { useAuth } from "@/context/AuthContext";
-import { Menu, Plus } from "lucide-react";
+import { Menu } from "lucide-react";
 import CreateClass from "./CreateClass";
+import JoinClass from "./JoinClass";
 
 interface NavbarProps {
   setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -32,10 +33,7 @@ export default function Navbar({ setIsOpen }: NavbarProps) {
               {currentUserQuery.data.role === "teacher" ? (
                 <CreateClass />
               ) : (
-                <Button>
-                  Join class
-                  <Plus />
-                </Button>
+                <JoinClass />
               )}
             </>
           )
