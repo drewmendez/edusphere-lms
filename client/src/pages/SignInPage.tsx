@@ -29,10 +29,10 @@ export default function SignInPage() {
 
   const onSignIn = (data: SignInForm) => {
     signInMutation.mutate(data, {
-      onSuccess: (data) => {
-        toast(data.message);
-        currentUserQuery.refetch();
+      onSuccess: async (response) => {
+        await currentUserQuery.refetch();
         navigate("/dashboard", { replace: true });
+        toast(response.message);
       },
       onError: (error) => {
         if (error.response?.data.error === "email") {
@@ -60,7 +60,7 @@ export default function SignInPage() {
   }
 
   return (
-    <main className="bg-bgWhite h-screen">
+    <main className="h-screen bg-bgWhite">
       <div className="container flex h-full items-center justify-center">
         <Card className="w-full max-w-[400px]">
           <CardHeader>

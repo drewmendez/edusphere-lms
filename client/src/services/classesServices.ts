@@ -40,3 +40,16 @@ export const useDeleteClass = () => {
     },
   });
 };
+
+export const useEditClass = () => {
+  return useMutation<
+    ApiResponse,
+    AxiosError<ApiResponse>,
+    { class_id: number; classData: ClassForm }
+  >({
+    mutationFn: async ({ class_id, classData }) => {
+      const { data } = await apiClient.put(`/classes/${class_id}`, classData);
+      return data;
+    },
+  });
+};

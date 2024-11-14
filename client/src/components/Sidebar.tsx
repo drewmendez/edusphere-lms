@@ -41,10 +41,10 @@ export default function Sidebar({ isOpen }: SidebarProps) {
 
   const onSignOut = () => {
     signOutMutation.mutate(undefined, {
-      onSuccess: (data) => {
-        toast(data.message);
-        currentUserQuery.refetch();
+      onSuccess: async (response) => {
+        await currentUserQuery.refetch();
         navigate("/", { replace: true });
+        toast(response.message);
       },
     });
   };

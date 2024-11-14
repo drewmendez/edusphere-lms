@@ -6,6 +6,7 @@ import {
   createClass,
   deleteClass,
   getClassesForTeacherRole,
+  updateClass,
 } from "./classes.services.js";
 
 export const handleGetClasses = async (req, res) => {
@@ -73,6 +74,33 @@ export const handleDeleteClass = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Class deleted successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Server error " + error,
+    });
+  }
+};
+
+export const handleUpdateClass = async (req, res) => {
+  const { class_subject, class_section } = req.body;
+
+  if (!class_subject || !class_section) {
+    return res.status(400).json({
+      success: false,
+      message: "All fields are required",
+    });
+  }
+
+  try {
+    const class_id = parseInt(req.params.class_id);
+
+    await updateClass(class_id, class_subject, class_section);
+
+    return res.status(200).json({
+      success: true,
+      message: "Class updated successfully",
     });
   } catch (error) {
     return res.status(500).json({

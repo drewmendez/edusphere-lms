@@ -55,7 +55,7 @@ export default function SignUpPage() {
   }
 
   return (
-    <main className="bg-bgWhite h-screen">
+    <main className="h-screen bg-bgWhite">
       <div className="container flex h-full items-center justify-center">
         <Card className="w-full max-w-[400px]">
           <CardHeader>

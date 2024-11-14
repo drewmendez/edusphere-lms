@@ -38,3 +38,14 @@ export const deleteClass = async (class_id) => {
     [class_id]
   );
 };
+
+export const updateClass = async (class_id, class_subject, class_section) => {
+  await pool.query(
+    `
+    UPDATE classes
+    SET class_subject = ?, class_section = ?
+    WHERE class_id = ?
+    `,
+    [class_subject, class_section, class_id]
+  );
+};

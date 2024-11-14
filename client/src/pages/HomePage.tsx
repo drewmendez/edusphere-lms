@@ -1,13 +1,20 @@
 import Navbar from "@/components/Navbar";
 import HomeImage from "../assets/home-image.jpg";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 export default function HomePage() {
+  const { currentUserQuery } = useAuth();
+
+  if (currentUserQuery.data) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
   return (
     <>
-      <header className="bg-bgWhite fixed inset-x-0 top-0 py-4 shadow">
+      <header className="fixed inset-x-0 top-0 bg-bgWhite py-4 shadow">
         <div className="container">
           <Navbar />
         </div>
@@ -29,8 +36,8 @@ export default function HomePage() {
               </p>
 
               <Button size="lg">
-                <Link className="flex items-center gap-2" to="/dashboard">
-                  Get Started <ArrowRight />{" "}
+                <Link className="flex items-center gap-2" to="/sign-in">
+                  Get Started <ArrowRight />
                 </Link>
               </Button>
             </div>

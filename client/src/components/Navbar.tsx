@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Logo from "../assets/logo.png";
 import { Button } from "./ui/button";
 import { useAuth } from "@/context/AuthContext";
@@ -11,6 +11,8 @@ interface NavbarProps {
 
 export default function Navbar({ setIsOpen }: NavbarProps) {
   const { currentUserQuery } = useAuth();
+
+  const { pathname } = useLocation();
 
   return (
     <nav className="flex items-center justify-between">
@@ -25,16 +27,18 @@ export default function Navbar({ setIsOpen }: NavbarProps) {
       </div>
       <div className="flex items-center gap-4">
         {currentUserQuery.data ? (
-          <>
-            {currentUserQuery.data.role === "teacher" ? (
-              <CreateClass />
-            ) : (
-              <Button>
-                Join class
-                <Plus />
-              </Button>
-            )}
-          </>
+          pathname === "/dashboard" && (
+            <>
+              {currentUserQuery.data.role === "teacher" ? (
+                <CreateClass />
+              ) : (
+                <Button>
+                  Join class
+                  <Plus />
+                </Button>
+              )}
+            </>
+          )
         ) : (
           <>
             <Button variant="outline" asChild>

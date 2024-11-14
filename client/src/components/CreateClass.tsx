@@ -72,7 +72,7 @@ export default function CreateClass() {
               error={errors.class_section?.message}
             />
           </div>
-          <Button className="">Create</Button>
+          <Button>Create</Button>
         </form>
       </DialogContent>
     </Dialog>

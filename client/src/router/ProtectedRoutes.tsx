@@ -14,12 +14,12 @@ export default function ProtectedRoutes() {
 
   return (
     <>
-      <header className="bg-bgWhite fixed inset-x-0 top-0 px-8 py-4 shadow">
+      <header className="fixed inset-x-0 top-0 bg-bgWhite px-8 py-4 shadow">
         <Navbar setIsOpen={setIsOpen} />
       </header>
       <Sidebar isOpen={isOpen} />
       <main
-        className={`bg-bgWhite flex min-h-screen pt-[68px] transition-all ${isOpen ? "pl-[350px]" : "pl-[82px]"}`}
+        className={`flex min-h-screen bg-bgWhite pt-[68px] transition-all ${isOpen ? "pl-[350px]" : "pl-[82px]"}`}
       >
         <Outlet />
       </main>

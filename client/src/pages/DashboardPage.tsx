@@ -1,8 +1,9 @@
 import ClassDropdown from "@/components/ClassDropdown";
+
 import { useGetClasses } from "@/services/classesServices";
 import { useGetStudentsInClass } from "@/services/enrollmentsServices";
 
-export default function Dashboard() {
+export default function DashboardPage() {
   const { data: classes } = useGetClasses();
 
   return (
@@ -17,6 +18,7 @@ export default function Dashboard() {
 interface ClassCardProps {
   class_id: number;
   class_subject: string;
+  class_code: string;
   banner_color: string;
   class_section: string;
 }
@@ -24,6 +26,7 @@ interface ClassCardProps {
 function ClassCard({
   class_id,
   class_subject,
+  class_code,
   banner_color,
   class_section,
 }: ClassCardProps) {
@@ -36,18 +39,29 @@ function ClassCard({
         style={{ background: banner_color }}
       >
         <div className="space-y-2">
-          <p className="text-2xl font-semibold">{class_subject}</p>
+          <p className="line-clamp-1 text-2xl">{class_subject}</p>
           <p>{class_section}</p>
         </div>
-        <ClassDropdown class_id={class_id} />
+        <ClassDropdown
+          class_id={class_id}
+          class_subject={class_subject}
+          class_section={class_section}
+        />
       </div>
-      <div className="flex flex-1 flex-col justify-end gap-1 p-5">
-        <p className="text-slate-600">
-          <span className="text-2xl">22</span> Tasks assigned
+      <div className="flex flex-1 flex-col justify-between p-5 text-slate-600">
+        <p className="text-sm">
+          Class code:{" "}
+          <span className="text-xl font-semibold">{class_code}</span>
         </p>
-        <p className="text-slate-600">
-          <span className="text-2xl">{students?.length}</span> Students enrolled
-        </p>
+        <div>
+          <p>
+            <span className="text-2xl">22</span> Assignments
+          </p>
+          <p>
+            <span className="text-2xl">{students?.length}</span> Students
+            enrolled
+          </p>
+        </div>
       </div>
     </div>
   );
