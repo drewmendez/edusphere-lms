@@ -28,3 +28,17 @@ export const useJoinClass = () => {
     },
   });
 };
+
+export const useUnenrollToClass = () => {
+  const { currentUserQuery } = useAuth();
+  const student_id = currentUserQuery.data?.user_id;
+
+  return useMutation<ApiResponse, AxiosError<ApiResponse>, number>({
+    mutationFn: async (class_id) => {
+      const { data } = await apiClient.delete(
+        `/enrollments?student_id=${student_id}&class_id=${class_id}`,
+      );
+      return data;
+    },
+  });
+};

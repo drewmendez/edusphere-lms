@@ -48,3 +48,13 @@ export const enrollToClass = async (student_id, class_id) => {
     [student_id, class_id]
   );
 };
+
+export const unenrollToClass = async (student_id, class_id) => {
+  await pool.query(
+    `
+    DELETE FROM enrollments
+    WHERE student_id = ? AND class_id = ?
+    `,
+    [student_id, class_id]
+  );
+};

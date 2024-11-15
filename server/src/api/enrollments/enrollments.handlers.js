@@ -3,6 +3,7 @@ import {
   getClassId,
   getStudentsInClass,
   enrollToClass,
+  unenrollToClass,
 } from "./enrollments.services.js";
 
 export const handleGetStudentsInClass = async (req, res) => {
@@ -59,6 +60,25 @@ export const handleEnrollToClass = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "You enrolled successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Server error " + error,
+    });
+  }
+};
+
+export const handleUnenrollToClass = async (req, res) => {
+  try {
+    const student_id = parseInt(req.query.student_id);
+    const class_id = parseInt(req.query.class_id);
+
+    await unenrollToClass(student_id, class_id);
+
+    return res.status(200).json({
+      success: true,
+      message: "You unenrolled successfully",
     });
   } catch (error) {
     return res.status(500).json({

@@ -5,7 +5,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useDeleteClass, useEditClass } from "@/services/classesServices";
-import { Edit, EllipsisVertical, Trash } from "lucide-react";
+import { Edit, EllipsisVertical, LogOut, Trash } from "lucide-react";
 import { toast } from "sonner";
 import {
   Dialog,
@@ -21,6 +21,8 @@ import { useForm } from "react-hook-form";
 import { ClassForm, ClassFormSchema } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
+import { useUnenrollToClass } from "@/services/enrollmentsServices";
 
 interface ClassDropdownProps {
   class_id: number;
@@ -33,9 +35,13 @@ export default function ClassDropdown({
   class_subject,
   class_section,
 }: ClassDropdownProps) {
+  const { currentUserQuery } = useAuth();
+  const role = currentUserQuery.data?.role;
+
   const [isOpen, setIsOpen] = useState(false);
   const { mutate: deleteClass } = useDeleteClass();
   const { mutate: updateClass } = useEditClass();
+  const { mutate: unenrollToClass } = useUnenrollToClass();
 
   const {
     register,
@@ -66,6 +72,12 @@ export default function ClassDropdown({
     });
   };
 
+  const onUnenrollToClass = () => {
+    unenrollToClass(class_id, {
+      onSuccess: (response) => toast(response.message),
+    });
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenu>
@@ -73,17 +85,28 @@ export default function ClassDropdown({
           <EllipsisVertical className="cursor-pointer" />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DialogTrigger asChild>
-            <DropdownMenuItem className="flex cursor-pointer justify-between">
-              Edit <Edit />
+          {role === "teacher" ? (
+            <>
+              <DialogTrigger asChild>
+                <DropdownMenuItem className="flex cursor-pointer justify-between">
+                  Edit <Edit />
+                </DropdownMenuItem>
+              </DialogTrigger>
+              <DropdownMenuItem
+                className="flex cursor-pointer justify-between"
+                onClick={onDeleteClass}
+              >
+                Delete <Trash />
+              </DropdownMenuItem>
+            </>
+          ) : (
+            <DropdownMenuItem
+              className="flex cursor-pointer justify-between"
+              onClick={onUnenrollToClass}
+            >
+              Unenroll <LogOut />
             </DropdownMenuItem>
-          </DialogTrigger>
-          <DropdownMenuItem
-            className="flex cursor-pointer justify-between"
-            onClick={onDeleteClass}
-          >
-            Delete <Trash />
-          </DropdownMenuItem>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
 
