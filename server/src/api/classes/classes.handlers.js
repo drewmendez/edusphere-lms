@@ -59,9 +59,9 @@ export const handleGetClass = async (req, res) => {
 };
 
 export const handleCreateClass = async (req, res) => {
-  const { class_subject, class_section } = req.body;
+  const { class_subject, class_section, teacher_id } = req.body;
 
-  if (!class_subject || !class_section) {
+  if (!class_subject || !class_section || !teacher_id) {
     return res.status(400).json({
       success: false,
       message: "All fields are required",
@@ -69,7 +69,6 @@ export const handleCreateClass = async (req, res) => {
   }
 
   try {
-    const teacher_id = parseInt(req.params.teacher_id);
     const class_code = generateClassCode();
     const banner_color = generateRandomBannerColor();
 

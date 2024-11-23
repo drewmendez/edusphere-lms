@@ -9,5 +9,9 @@ import {
 export const router = express.Router();
 
 router.get("/:class_id", verifyAuthCookie, handleGetStudentsInClass);
-router.post("/:student_id", verifyAuthCookie, handleEnrollToClass);
-router.delete("/", verifyAuthCookie, handleUnenrollToClass);
+router.post("/", verifyAuthCookie, handleEnrollToClass);
+router.delete(
+  "/:student_id/:class_id",
+  verifyAuthCookie,
+  handleUnenrollToClass
+);

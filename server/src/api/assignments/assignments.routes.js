@@ -7,5 +7,5 @@ import {
 
 export const router = express.Router();
 
-router.get("/:class_id", handleGetAssignmentsInClass);
+router.get("/:class_id", verifyAuthCookie, handleGetAssignmentsInClass);
 router.post("/", verifyAuthCookie, handleCreateAssignment);

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useAuth } from "@/context/AuthContext";
 import { cn } from "@/lib/utils";
 import { useCreateAnnouncement } from "@/services/announcementsServices";
 import { useGetClass } from "@/services/classesServices";
@@ -15,6 +16,8 @@ export default function ClassStreamPage() {
   const [announcement, setAnnouncement] = useState("");
   const params = useParams();
   const class_id = parseInt(params.class_id!);
+  const { currentUserQuery } = useAuth();
+  const announcer_id = currentUserQuery.data?.user_id;
 
   const { data: classData } = useGetClass(class_id);
   const { data: classFeeds } = useGetClassFeeds(class_id);
@@ -23,8 +26,12 @@ export default function ClassStreamPage() {
   const onPostAnnouncement = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const payload = { class_id, announcement };
-    createAnnouncement(payload, {
+    const announcementData = {
+      class_id,
+      announcement,
+      announcer_id: announcer_id!,
+    };
+    createAnnouncement(announcementData, {
       onSuccess: (data) => {
         toast(data.message);
         setIsOpen(false);

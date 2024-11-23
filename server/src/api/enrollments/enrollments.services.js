@@ -26,17 +26,17 @@ export const getClassId = async (class_code) => {
   return result[0];
 };
 
-export const getEnrollments = async (student_id) => {
+export const getEnrollment = async (student_id, class_id) => {
   const [result] = await pool.query(
     `
-    SELECT class_id
+    SELECT *
     FROM enrollments
-    WHERE student_id = ?
+    WHERE student_id = ? AND class_id = ?
     `,
-    [student_id]
+    [student_id, class_id]
   );
 
-  return result;
+  return result[0];
 };
 
 export const enrollToClass = async (student_id, class_id) => {

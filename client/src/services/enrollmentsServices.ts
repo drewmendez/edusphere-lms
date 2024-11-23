@@ -1,8 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiClient } from "./apiClient";
-import { ApiResponse, ClassCodeForm, Student } from "@/types/types";
+import { ApiResponse, EnrollmentData, Student } from "@/types/types";
 import { AxiosError } from "axios";
-import { useAuth } from "@/context/AuthContext";
 
 export const useGetStudentsInClass = (class_id: number) => {
   return useQuery<Student[]>({
@@ -15,28 +14,19 @@ export const useGetStudentsInClass = (class_id: number) => {
 };
 
 export const useJoinClass = () => {
-  const { currentUserQuery } = useAuth();
-  const student_id = currentUserQuery.data?.user_id;
-
-  return useMutation<ApiResponse, AxiosError<ApiResponse>, ClassCodeForm>({
-    mutationFn: async (classCodeData) => {
-      const { data } = await apiClient.post(
-        `/enrollments/${student_id}`,
-        classCodeData,
-      );
+  return useMutation<ApiResponse, AxiosError<ApiResponse>, EnrollmentData>({
+    mutationFn: async (enrollmentData) => {
+      const { data } = await apiClient.post("/enrollments", enrollmentData);
       return data;
     },
   });
 };
 
-export const useUnenrollToClass = () => {
-  const { currentUserQuery } = useAuth();
-  const student_id = currentUserQuery.data?.user_id;
-
+export const useUnenrollToClass = (student_id: number) => {
   return useMutation<ApiResponse, AxiosError<ApiResponse>, number>({
     mutationFn: async (class_id) => {
       const { data } = await apiClient.delete(
-        `/enrollments?student_id=${student_id}&class_id=${class_id}`,
+        `/enrollments/${student_id}/${class_id}`,
       );
       return data;
     },

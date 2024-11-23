@@ -7,7 +7,9 @@ import { Class } from "@/types/types";
 import { Link } from "react-router-dom";
 
 export default function DashboardPage() {
-  const { data: classes } = useGetClasses();
+  const { currentUserQuery } = useAuth();
+  const user_id = currentUserQuery.data?.user_id;
+  const { data: classes } = useGetClasses(user_id!);
 
   return (
     <section className="w-full p-6">

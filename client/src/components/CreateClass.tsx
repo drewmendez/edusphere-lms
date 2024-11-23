@@ -15,9 +15,12 @@ import FormField from "./FormField";
 import { useCreateClass } from "@/services/classesServices";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useAuth } from "@/context/AuthContext";
 
 export default function CreateClass() {
   const [isOpen, setIsOpen] = useState(false);
+  const { currentUserQuery } = useAuth();
+  const teacher_id = currentUserQuery.data?.user_id;
 
   const {
     register,
@@ -30,8 +33,10 @@ export default function CreateClass() {
 
   const { mutate: createClass } = useCreateClass();
 
-  const onCreateClass = (data: ClassForm) => {
-    createClass(data, {
+  const onCreateClass = (classForm: ClassForm) => {
+    const classData = { ...classForm, teacher_id: teacher_id! };
+
+    createClass(classData, {
       onSuccess: (response) => {
         setIsOpen(false);
         toast(response.message);

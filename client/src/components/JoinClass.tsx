@@ -10,15 +10,18 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { useForm } from "react-hook-form";
-import { ClassCodeForm, ClassCodeFormSchema } from "@/types/types";
+import { EnrollmentForm, EnrollmentFormSchema } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useJoinClass } from "@/services/enrollmentsServices";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useAuth } from "@/context/AuthContext";
 
 export default function JoinClass() {
   const [isOpen, setIsOpen] = useState(false);
   const { mutate: joinClass } = useJoinClass();
+  const { currentUserQuery } = useAuth();
+  const student_id = currentUserQuery.data?.user_id;
 
   const {
     register,
@@ -26,12 +29,14 @@ export default function JoinClass() {
     setError,
     reset,
     formState: { errors },
-  } = useForm<ClassCodeForm>({
-    resolver: zodResolver(ClassCodeFormSchema),
+  } = useForm<EnrollmentForm>({
+    resolver: zodResolver(EnrollmentFormSchema),
   });
 
-  const onJoinClass = (classCodeData: ClassCodeForm) => {
-    joinClass(classCodeData, {
+  const onJoinClass = (enrollmentForm: EnrollmentForm) => {
+    const enrollmentData = { ...enrollmentForm, student_id: student_id! };
+
+    joinClass(enrollmentData, {
       onSuccess: (response) => {
         setIsOpen(false);
         toast(response.message);

@@ -37,11 +37,12 @@ export default function ClassDropdown({
 }: ClassDropdownProps) {
   const { currentUserQuery } = useAuth();
   const role = currentUserQuery.data?.role;
+  const student_id = currentUserQuery.data?.user_id;
 
   const [isOpen, setIsOpen] = useState(false);
   const { mutate: deleteClass } = useDeleteClass();
-  const { mutate: updateClass } = useEditClass();
-  const { mutate: unenrollToClass } = useUnenrollToClass();
+  const { mutate: updateClass } = useEditClass(class_id);
+  const { mutate: unenrollToClass } = useUnenrollToClass(student_id!);
 
   const {
     register,
@@ -62,9 +63,10 @@ export default function ClassDropdown({
     });
   };
 
-  const onUpdateClass = (classData: ClassForm) => {
-    const mutationData = { class_id, classData };
-    updateClass(mutationData, {
+  const onUpdateClass = (classForm: ClassForm) => {
+    const classData = { ...classForm, class_id };
+
+    updateClass(classData, {
       onSuccess: (response) => {
         setIsOpen(false);
         toast(response.message);

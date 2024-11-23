@@ -1,13 +1,9 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiClient } from "./apiClient";
-import { ApiResponse, Class, ClassForm } from "@/types/types";
+import { ApiResponse, Class, ClassData } from "@/types/types";
 import { AxiosError } from "axios";
-import { useAuth } from "@/context/AuthContext";
 
-export const useGetClasses = () => {
-  const { currentUserQuery } = useAuth();
-  const user_id = currentUserQuery.data?.user_id;
-
+export const useGetClasses = (user_id: number) => {
   return useQuery<Class[]>({
     queryKey: ["classes", user_id],
     queryFn: async () => {
@@ -28,15 +24,9 @@ export const useGetClass = (class_id: number) => {
 };
 
 export const useCreateClass = () => {
-  const { currentUserQuery } = useAuth();
-  const teacher_id = currentUserQuery.data?.user_id;
-
-  return useMutation<ApiResponse, AxiosError<ApiResponse>, ClassForm>({
+  return useMutation<ApiResponse, AxiosError<ApiResponse>, ClassData>({
     mutationFn: async (classData) => {
-      const { data } = await apiClient.post(
-        `/classes/${teacher_id}`,
-        classData,
-      );
+      const { data } = await apiClient.post("/classes", classData);
       return data;
     },
   });
@@ -51,13 +41,9 @@ export const useDeleteClass = () => {
   });
 };
 
-export const useEditClass = () => {
-  return useMutation<
-    ApiResponse,
-    AxiosError<ApiResponse>,
-    { class_id: number; classData: ClassForm }
-  >({
-    mutationFn: async ({ class_id, classData }) => {
+export const useEditClass = (class_id: number) => {
+  return useMutation<ApiResponse, AxiosError<ApiResponse>, ClassData>({
+    mutationFn: async (classData) => {
       const { data } = await apiClient.put(`/classes/${class_id}`, classData);
       return data;
     },

@@ -12,6 +12,6 @@ export const router = express.Router();
 
 router.get("/:class_id", verifyAuthCookie, handleGetClass);
 router.get("/user/:user_id", verifyAuthCookie, handleGetClasses);
-router.post("/:teacher_id", verifyAuthCookie, handleCreateClass);
+router.post("/", verifyAuthCookie, handleCreateClass);
 router.delete("/:class_id", verifyAuthCookie, handleDeleteClass);
 router.put("/:class_id", verifyAuthCookie, handleUpdateClass);
