@@ -30,13 +30,34 @@ export const ClassCodeFormSchema = z.object({
 
 export type ClassCodeForm = z.infer<typeof ClassCodeFormSchema>;
 
+export const AssignmentFormSchema = z.object({
+  title: z.string().trim().min(1, "This field is required"),
+  description: z.string().trim().min(1, "This field is required"),
+});
+
+export type AssignmentForm = z.infer<typeof AssignmentFormSchema> & {
+  class_id: number;
+};
+
+export type AnnouncementForm = {
+  class_id: number;
+  announcement: string;
+};
+
+export type Assignment = {
+  assignment_id: number;
+  title: string;
+  description: string;
+  created_at: string;
+};
+
 export type ApiResponse = {
   success: boolean;
   error?: string;
   message: string;
 };
 
-export type CurrentUser = {
+export type User = {
   user_id: number;
   user: string;
   role: "teacher" | "student";
@@ -45,7 +66,7 @@ export type CurrentUser = {
 export type Class = {
   class_id: number;
   class_subject: string;
-  class_code: string;
+  class_code?: string;
   banner_color: string;
   class_section: string;
   class_teacher?: string;

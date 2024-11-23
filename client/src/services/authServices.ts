@@ -1,11 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiClient } from "./apiClient";
-import {
-  ApiResponse,
-  CurrentUser,
-  SignInForm,
-  SignUpForm,
-} from "@/types/types";
+import { ApiResponse, User, SignInForm, SignUpForm } from "@/types/types";
 import { AxiosError } from "axios";
 
 export const useSignUp = () => {
@@ -36,7 +31,7 @@ export const useSignOut = () => {
 };
 
 export const useGetCurrentUser = () => {
-  return useQuery<CurrentUser | null>({
+  return useQuery<User | null>({
     queryKey: ["current-user"],
     queryFn: async () => {
       try {

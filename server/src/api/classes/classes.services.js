@@ -28,6 +28,19 @@ export const getClassesForStudentRole = async (student_id) => {
   return result;
 };
 
+export const getClass = async (class_id) => {
+  const [result] = await pool.query(
+    `
+    SELECT class_id, class_subject, class_section, banner_color
+    FROM classes
+    WHERE class_id = ?
+    `,
+    [class_id]
+  );
+
+  return result[0];
+};
+
 export const createClass = async (
   class_subject,
   class_code,

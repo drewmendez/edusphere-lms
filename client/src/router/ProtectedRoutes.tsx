@@ -19,7 +19,7 @@ export default function ProtectedRoutes() {
       </header>
       <Sidebar isOpen={isOpen} />
       <main
-        className={`flex min-h-screen bg-bgWhite pt-[68px] transition-all ${isOpen ? "pl-[350px]" : "pl-[82px]"}`}
+        className={`flex min-h-screen bg-bgWhite pt-[68px] transition-all ${isOpen ? "pl-[310px]" : "pl-[82px]"}`}
       >
         <Outlet />
       </main>

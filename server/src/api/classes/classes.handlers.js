@@ -5,6 +5,7 @@ import {
 import {
   createClass,
   deleteClass,
+  getClass,
   getClassesForStudentRole,
   getClassesForTeacherRole,
   updateClass,
@@ -34,6 +35,21 @@ export const handleGetClasses = async (req, res) => {
     }
 
     // TODO: get classes for student role
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Server error " + error,
+    });
+  }
+};
+
+export const handleGetClass = async (req, res) => {
+  try {
+    const class_id = parseInt(req.params.class_id);
+
+    const result = await getClass(class_id);
+
+    return res.status(200).send(result);
   } catch (error) {
     return res.status(500).json({
       success: false,

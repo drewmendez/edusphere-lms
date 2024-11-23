@@ -5,6 +5,10 @@ import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoutes from "./ProtectedRoutes";
 import DashboardPage from "@/pages/DashboardPage";
 import ToReviewPage from "@/pages/ToReviewPage";
+import ClassStreamPage from "@/pages/ClassStreamPage";
+import ClassPageLayout from "@/pages/ClassPageLayout";
+import ClassPeoplePage from "@/pages/ClassPeoplePage";
+import ClassAssignmentsPage from "@/pages/ClassAssignmentsPage";
 
 export const router = createBrowserRouter([
   {
@@ -27,7 +31,24 @@ export const router = createBrowserRouter([
         element: <DashboardPage />,
       },
       {
-        path: "/dashboard/to-review",
+        element: <ClassPageLayout />,
+        children: [
+          {
+            path: "/dashboard/stream/:class_id",
+            element: <ClassStreamPage />,
+          },
+          {
+            path: "/dashboard/assignments/:class_id",
+            element: <ClassAssignmentsPage />,
+          },
+          {
+            path: "/dashboard/people/:class_id",
+            element: <ClassPeoplePage />,
+          },
+        ],
+      },
+      {
+        path: "/to-review",
         element: <ToReviewPage />,
       },
     ],

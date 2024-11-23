@@ -11,7 +11,17 @@ export const useGetClasses = () => {
   return useQuery<Class[]>({
     queryKey: ["classes", user_id],
     queryFn: async () => {
-      const { data } = await apiClient.get(`/classes/${user_id}`);
+      const { data } = await apiClient.get(`/classes/user/${user_id}`);
+      return data;
+    },
+  });
+};
+
+export const useGetClass = (class_id: number) => {
+  return useQuery<Class>({
+    queryKey: ["class", class_id],
+    queryFn: async () => {
+      const { data } = await apiClient.get(`/classes/${class_id}`);
       return data;
     },
   });

@@ -22,7 +22,7 @@ CREATE TABLE enrollments (
   student_id INT,
   class_id INT,
   FOREIGN KEY (student_id) REFERENCES users(user_id),
-  FOREIGN KEY (class_id) REFERENCES classes(class_id)
+  FOREIGN KEY (class_id) REFERENCES classes(class_id) ON DELETE CASCADE
 );
 
 CREATE TABLE assignments (

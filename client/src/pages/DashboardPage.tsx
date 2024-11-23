@@ -4,6 +4,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useGetClasses } from "@/services/classesServices";
 import { useGetStudentsInClass } from "@/services/enrollmentsServices";
 import { Class } from "@/types/types";
+import { Link } from "react-router-dom";
 
 export default function DashboardPage() {
   const { data: classes } = useGetClasses();
@@ -32,13 +33,17 @@ function ClassCard({
   const role = currentUserQuery.data?.role;
 
   return (
-    <div className="flex h-[296px] w-[302px] flex-col overflow-hidden rounded-xl border-2">
+    <div className="flex h-[296px] w-[302px] flex-col overflow-hidden rounded-xl border-2 transition hover:shadow-md">
       <div
         className="flex justify-between p-5 text-white"
         style={{ background: banner_color }}
       >
         <div className="space-y-1">
-          <p className="line-clamp-1 text-2xl">{class_subject}</p>
+          <Link to={`/dashboard/stream/${class_id}`}>
+            <p className="line-clamp-1 cursor-pointer text-2xl hover:underline">
+              {class_subject}
+            </p>
+          </Link>
           <p className="text-sm">{class_section}</p>
           {role === "student" && <p>{class_teacher}</p>}
         </div>
