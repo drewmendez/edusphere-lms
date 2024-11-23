@@ -14,7 +14,7 @@ export default function ProtectedRoutes() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 bg-bgWhite px-8 py-4 shadow">
+      <header className="fixed inset-x-0 top-0 z-10 bg-bgWhite px-8 py-4 shadow">
         <Navbar setIsOpen={setIsOpen} />
       </header>
       <Sidebar isOpen={isOpen} />

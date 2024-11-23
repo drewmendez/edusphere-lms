@@ -10,6 +10,7 @@ import { router as enrollmentsRoute } from "./src/api/enrollments/enrollments.ro
 import { router as usersRoute } from "./src/api/users/users.routes.js";
 import { router as announcementsRoute } from "./src/api/announcements/announcements.routes.js";
 import { router as assignmentsRoute } from "./src/api/assignments/assignments.routes.js";
+import { router as classFeedsRoute } from "./src/api/classFeeds/classFeeds.routes.js";
 
 // initializations
 const app = express();
@@ -31,6 +32,7 @@ app.use("/enrollments", enrollmentsRoute);
 app.use("/users", usersRoute);
 app.use("/announcements", announcementsRoute);
 app.use("/assignments", assignmentsRoute);
+app.use("/class-feeds", classFeedsRoute);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);

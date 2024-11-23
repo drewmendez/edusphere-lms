@@ -1,12 +1,17 @@
 import pool from "../../config/db.config.js";
 
-export const createAssignment = async (title, description, class_id) => {
+export const createAssignment = async (
+  title,
+  description,
+  class_id,
+  creator_id
+) => {
   await pool.query(
     `
-    INSERT INTO assignments (title, description, class_id)
-    VALUES (?,?,?)
+    INSERT INTO assignments (title, description, class_id, creator_id)
+    VALUES (?,?,?,?)
     `,
-    [title, description, class_id]
+    [title, description, class_id, creator_id]
   );
 };
 

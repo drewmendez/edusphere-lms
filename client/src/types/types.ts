@@ -37,6 +37,7 @@ export const AssignmentFormSchema = z.object({
 
 export type AssignmentForm = z.infer<typeof AssignmentFormSchema> & {
   class_id: number;
+  creator_id: number;
 };
 
 export type AnnouncementForm = {
@@ -74,4 +75,12 @@ export type Class = {
 
 export type Student = {
   student_id: number;
+};
+
+export type ClassFeed = {
+  feed_id: number;
+  content: string;
+  type: "announcement" | "assignment";
+  creator: string;
+  created_at: string;
 };

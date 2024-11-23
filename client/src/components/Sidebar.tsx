@@ -52,7 +52,7 @@ export default function Sidebar({ isOpen }: SidebarProps) {
 
   return (
     <aside
-      className={`fixed inset-y-0 left-0 mt-[68px] overflow-hidden py-5 pr-3 shadow transition-all ${isOpen ? "w-[310px]" : "w-[82px]"}`}
+      className={`fixed inset-y-0 left-0 z-10 mt-[68px] overflow-hidden py-5 pr-3 shadow transition-all ${isOpen ? "w-[310px]" : "w-[82px]"}`}
     >
       <nav className="flex h-full flex-col justify-between">
         <div className="flex flex-col">

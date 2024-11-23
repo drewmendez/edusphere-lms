@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useCreateAssignment } from "@/services/assignmentsServices";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useAuth } from "@/context/AuthContext";
 
 interface CreateAssignmentProps {
   class_id: number;
@@ -23,6 +24,8 @@ interface CreateAssignmentProps {
 
 export default function CreateAssignment({ class_id }: CreateAssignmentProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const { currentUserQuery } = useAuth();
+  const creator_id = currentUserQuery.data?.user_id;
   const {
     register,
     handleSubmit,
@@ -36,7 +39,7 @@ export default function CreateAssignment({ class_id }: CreateAssignmentProps) {
 
   const onCreateAssignment = (assignmentData: AssignmentForm) => {
     createAssignment(
-      { ...assignmentData, class_id },
+      { ...assignmentData, class_id, creator_id: creator_id! },
       {
         onSuccess: (response) => {
           setIsOpen(false);

@@ -32,9 +32,9 @@ export const handleGetAssignmentsInClass = async (req, res) => {
 };
 
 export const handleCreateAssignment = async (req, res) => {
-  const { title, description, class_id } = req.body;
+  const { title, description, class_id, creator_id } = req.body;
 
-  if (!title || !description || !class_id) {
+  if (!title || !description || !class_id || !creator_id) {
     return res.status(400).json({
       success: false,
       message: "All fields are required",
@@ -42,7 +42,7 @@ export const handleCreateAssignment = async (req, res) => {
   }
 
   try {
-    await createAssignment(title, description, class_id);
+    await createAssignment(title, description, class_id, creator_id);
 
     return res.status(201).json({
       success: true,

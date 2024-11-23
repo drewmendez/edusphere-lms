@@ -21,7 +21,7 @@ export default function ClassPageLayout() {
 
   return (
     <section className="relative w-full">
-      <nav className="sticky inset-x-0 top-0 flex border-b-2 px-7">
+      <nav className="sticky inset-x-0 top-[68px] flex border-b-2 bg-bgWhite px-7">
         {NAVLINKS.map((navLink, index) => (
           <Link key={index} to={navLink.path + class_id}>
             <p
