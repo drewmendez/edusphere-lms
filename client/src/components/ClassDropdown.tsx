@@ -4,7 +4,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useDeleteClass, useEditClass } from "@/services/classesServices";
+import {
+  useDeleteClass,
+  useEditClass,
+  useGetClasses,
+} from "@/services/classesServices";
 import { Edit, EllipsisVertical, LogOut, Trash } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -40,6 +44,7 @@ export default function ClassDropdown({
   const student_id = currentUserQuery.data?.user_id;
 
   const [isOpen, setIsOpen] = useState(false);
+  const { refetch: refetchClasses } = useGetClasses();
   const { mutate: deleteClass } = useDeleteClass();
   const { mutate: updateClass } = useEditClass(class_id);
   const { mutate: unenrollToClass } = useUnenrollToClass(student_id!);
@@ -59,7 +64,10 @@ export default function ClassDropdown({
 
   const onDeleteClass = () => {
     deleteClass(class_id, {
-      onSuccess: (response) => toast(response.message),
+      onSuccess: (response) => {
+        toast(response.message);
+        refetchClasses();
+      },
     });
   };
 
@@ -70,13 +78,17 @@ export default function ClassDropdown({
       onSuccess: (response) => {
         setIsOpen(false);
         toast(response.message);
+        refetchClasses();
       },
     });
   };
 
   const onUnenrollToClass = () => {
     unenrollToClass(class_id, {
-      onSuccess: (response) => toast(response.message),
+      onSuccess: (response) => {
+        toast(response.message);
+        refetchClasses();
+      },
     });
   };
 

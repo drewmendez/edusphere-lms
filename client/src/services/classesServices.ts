@@ -2,8 +2,12 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiClient } from "./apiClient";
 import { ApiResponse, Class, ClassData } from "@/types/types";
 import { AxiosError } from "axios";
+import { useAuth } from "@/context/AuthContext";
 
-export const useGetClasses = (user_id: number) => {
+export const useGetClasses = () => {
+  const { currentUserQuery } = useAuth();
+  const user_id = currentUserQuery.data?.user_id;
+
   return useQuery<Class[]>({
     queryKey: ["classes", user_id],
     queryFn: async () => {

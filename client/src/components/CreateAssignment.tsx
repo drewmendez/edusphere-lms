@@ -13,7 +13,10 @@ import TextareaField from "./TextareaField";
 import { useForm } from "react-hook-form";
 import { AssignmentForm, AssignmentFormSchema } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCreateAssignment } from "@/services/assignmentsServices";
+import {
+  useCreateAssignment,
+  useGetAssignmentsInClass,
+} from "@/services/assignmentsServices";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
@@ -36,6 +39,7 @@ export default function CreateAssignment({ class_id }: CreateAssignmentProps) {
   });
 
   const { mutate: createAssignment } = useCreateAssignment();
+  const { refetch: refetchAssignments } = useGetAssignmentsInClass(class_id);
 
   const onCreateAssignment = (assignmentData: AssignmentForm) => {
     createAssignment(
@@ -44,6 +48,7 @@ export default function CreateAssignment({ class_id }: CreateAssignmentProps) {
         onSuccess: (response) => {
           setIsOpen(false);
           toast(response.message);
+          refetchAssignments();
         },
       },
     );
