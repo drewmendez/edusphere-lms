@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiClient } from "./apiClient";
-import { ApiResponse, Class, ClassData } from "@/types/types";
+import { ApiResponse, Class, ClassData, User } from "@/types/types";
 import { AxiosError } from "axios";
 import { useAuth } from "@/context/AuthContext";
 
@@ -22,6 +22,16 @@ export const useGetClass = (class_id: number) => {
     queryKey: ["class", class_id],
     queryFn: async () => {
       const { data } = await apiClient.get(`/classes/${class_id}`);
+      return data;
+    },
+  });
+};
+
+export const useGetPeopleInClass = (class_id: number) => {
+  return useQuery<User[]>({
+    queryKey: ["people", class_id],
+    queryFn: async () => {
+      const { data } = await apiClient.get(`/classes/people/${class_id}`);
       return data;
     },
   });

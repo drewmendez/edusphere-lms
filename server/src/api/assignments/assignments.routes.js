@@ -10,11 +10,10 @@ import {
   handleSubmitAnswer,
 } from "./assignments.handlers.js";
 
-export const router = express.Router();
+const router = express.Router();
 
 router.get("/class/:class_id", verifyAuthCookie, handleGetAssignmentsInClass);
 router.get("/:assignment_id", verifyAuthCookie, handleGetAssignment);
-router.delete("/:assignment_id", verifyAuthCookie, handleDeleteAssignment);
 router.get(
   "/submissions/:assignment_id/:class_id",
   verifyAuthCookie,
@@ -25,5 +24,10 @@ router.get(
   verifyAuthCookie,
   handleGetSubmission
 );
+
 router.post("/", verifyAuthCookie, handleCreateAssignment);
 router.post("/submissions", verifyAuthCookie, handleSubmitAnswer);
+
+router.delete("/:assignment_id", verifyAuthCookie, handleDeleteAssignment);
+
+export { router as assignmentsRoute };

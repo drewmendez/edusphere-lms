@@ -1,5 +1,5 @@
 import { useAuth } from "@/context/AuthContext";
-import { useGetPeopleInClass } from "@/services/usersServices";
+import { useGetPeopleInClass } from "@/services/classesServices";
 import { useParams } from "react-router-dom";
 
 export default function ClassPeoplePage() {

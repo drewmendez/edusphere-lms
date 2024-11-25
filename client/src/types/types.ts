@@ -84,10 +84,6 @@ export type Class = {
   class_teacher?: string;
 };
 
-export type Student = {
-  student_id: number;
-};
-
 export type ClassFeed = {
   feed_id: number;
   id: number;

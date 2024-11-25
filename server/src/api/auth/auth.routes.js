@@ -7,9 +7,12 @@ import {
 } from "./auth.handlers.js";
 import { verifyAuthCookie } from "../../middlewares/verifyAuthCookie.js";
 
-export const router = express.Router();
+const router = express.Router();
+
+router.get("/current-user", verifyAuthCookie, handleGetCurrentUser);
 
 router.post("/sign-in", handleSignIn);
 router.post("/sign-up", handleSignUp);
 router.post("/sign-out", verifyAuthCookie, handleSignOut);
-router.get("/current-user", verifyAuthCookie, handleGetCurrentUser);
+
+export { router as authRoute };
