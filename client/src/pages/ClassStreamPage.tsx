@@ -1,3 +1,4 @@
+import AnnouncementDropdown from "@/components/AnnouncementDropdown";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/context/AuthContext";
@@ -8,7 +9,7 @@ import { useGetClassFeeds } from "@/services/classFeedsServices";
 import { ClassFeed } from "@/types/types";
 import { ClipboardList } from "lucide-react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function ClassStreamPage() {
@@ -17,6 +18,7 @@ export default function ClassStreamPage() {
   const params = useParams();
   const class_id = parseInt(params.class_id!);
   const { currentUserQuery } = useAuth();
+  const role = currentUserQuery.data?.role;
   const announcer_id = currentUserQuery.data?.user_id;
 
   const { data: classData } = useGetClass(class_id);
@@ -35,6 +37,7 @@ export default function ClassStreamPage() {
     createAnnouncement(announcementData, {
       onSuccess: (data) => {
         setIsOpen(false);
+        setAnnouncement("");
         toast(data.message);
         refetchClassFeeds();
       },
@@ -44,11 +47,22 @@ export default function ClassStreamPage() {
   return (
     <div className="w-full max-w-[900px] space-y-6">
       <div
-        className="flex h-[250px] flex-col justify-end gap-2 rounded-xl p-6 text-white"
+        className="flex h-[250px] flex-col justify-between gap-2 rounded-xl p-6 text-white"
         style={{ background: classData?.banner_color }}
       >
-        <p className="text-6xl">{classData?.class_subject}</p>
-        <p className="text-lg font-semibold">{classData?.class_section}</p>
+        {role === "teacher" && (
+          <p>
+            Class code:{" "}
+            <span className="text-lg font-semibold">
+              {classData?.class_code}
+            </span>
+          </p>
+        )}
+
+        <div className="mt-auto space-y-3">
+          <p className="text-6xl">{classData?.class_subject}</p>
+          <p className="text-lg font-semibold">{classData?.class_section}</p>
+        </div>
       </div>
       <form
         className={cn(
@@ -86,16 +100,23 @@ export default function ClassStreamPage() {
         </div>
       </form>
 
-      <div className="space-y-6">
+      <div className="flex flex-col gap-6">
         {classFeeds?.map((classFeed) =>
           classFeed.type === "assignment" ? (
             <AssignmentFeed
               key={classFeed.feed_id}
+              class_id={class_id}
               {...classFeed}
               accentColor={classData?.banner_color}
             />
           ) : (
-            <AnnouncementFeed key={classFeed.feed_id} {...classFeed} />
+            <AnnouncementFeed
+              key={classFeed.feed_id}
+              {...classFeed}
+              role={role}
+              announcer_id={announcer_id}
+              class_id={class_id}
+            />
           ),
         )}
       </div>
@@ -104,41 +125,63 @@ export default function ClassStreamPage() {
 }
 
 type FeedProps = ClassFeed & {
+  class_id: number;
   accentColor?: string;
+  role?: "teacher" | "student";
+  announcer_id?: number;
 };
 
 function AssignmentFeed({
+  id,
   content,
   creator,
   created_at,
+  class_id,
   accentColor,
 }: FeedProps) {
   return (
-    <div className="flex items-center justify-between rounded-lg border px-5 py-3 shadow">
-      <div className="flex items-center gap-2">
-        <div
-          className="rounded-full p-2 text-white"
-          style={{ background: accentColor }}
-        >
-          <ClipboardList />
+    <Link to={`/dashboard/assignments/${class_id}/${id}`}>
+      <div className="flex items-center justify-between rounded-lg border px-5 py-3 shadow">
+        <div className="flex items-center gap-2">
+          <div
+            className="rounded-full p-2 text-white"
+            style={{ background: accentColor }}
+          >
+            <ClipboardList />
+          </div>
+          <p>
+            <span className="font-semibold">{creator}</span> posted a new
+            assignment: <span className="font-semibold">{content}</span>
+          </p>
         </div>
-        <p>
-          {creator} posted a new assignment: {content}
-        </p>
+        <p className="text-xs">{created_at}</p>
       </div>
-      <p className="text-xs">{created_at}</p>
-    </div>
+    </Link>
   );
 }
 
-function AnnouncementFeed({ content, creator, created_at }: FeedProps) {
+function AnnouncementFeed({
+  id,
+  content,
+  creator,
+  created_at,
+  role,
+  creator_id,
+  announcer_id,
+  class_id,
+}: FeedProps) {
   return (
-    <div className="f divide-y-2 rounded-lg border px-5 py-3 shadow">
-      <div className="py-3 first:pt-0">
-        <p>{creator}</p>
-        <p className="text-xs">{created_at}</p>
+    <div className="divide-y-2 rounded-lg border px-5 py-3 shadow">
+      <div className="flex items-center justify-between py-3 first:pt-0">
+        <div>
+          <p className="font-semibold">{creator}</p>
+          <p className="text-xs">{created_at}</p>
+        </div>
+        {(role === "teacher" || creator_id === announcer_id) && (
+          <AnnouncementDropdown announcement_id={id} class_id={class_id} />
+        )}
       </div>
-      <p className="py-3 last:pb-0">{content}</p>
+      <p className="whitespace-pre-wrap py-3 last:pb-0">{content}</p>
     </div>
   );
 }

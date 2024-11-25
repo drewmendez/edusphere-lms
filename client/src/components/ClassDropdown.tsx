@@ -96,7 +96,7 @@ export default function ClassDropdown({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <EllipsisVertical className="cursor-pointer" />
+          <EllipsisVertical className="flex-shrink-0 cursor-pointer" />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           {role === "teacher" ? (

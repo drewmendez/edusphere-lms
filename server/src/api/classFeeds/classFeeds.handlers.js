@@ -8,8 +8,10 @@ export const handleGetClassFeeds = async (req, res) => {
 
     const classFeeds = result.map((item) => ({
       feed_id: item.feed_id,
+      id: item.id,
       content: item.content,
       type: item.type,
+      creator_id: item.creator_id,
       creator: `${item.firstname} ${item.lastname}`,
       created_at: new Intl.DateTimeFormat("en-US", {
         weekday: "short", // Short weekday, e.g., "Sat"

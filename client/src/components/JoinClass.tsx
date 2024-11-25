@@ -16,10 +16,12 @@ import { useJoinClass } from "@/services/enrollmentsServices";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
+import { useGetClasses } from "@/services/classesServices";
 
 export default function JoinClass() {
   const [isOpen, setIsOpen] = useState(false);
   const { mutate: joinClass } = useJoinClass();
+  const { refetch: refetchClasses } = useGetClasses();
   const { currentUserQuery } = useAuth();
   const student_id = currentUserQuery.data?.user_id;
 
@@ -40,6 +42,7 @@ export default function JoinClass() {
       onSuccess: (response) => {
         setIsOpen(false);
         toast(response.message);
+        refetchClasses();
       },
       onError: (error) => {
         setError("class_code", {

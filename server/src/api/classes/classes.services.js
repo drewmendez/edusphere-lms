@@ -31,7 +31,7 @@ export const getClassesForStudentRole = async (student_id) => {
 export const getClass = async (class_id) => {
   const [result] = await pool.query(
     `
-    SELECT class_id, class_subject, class_section, banner_color
+    SELECT class_id, class_subject, class_section, class_code, banner_color
     FROM classes
     WHERE class_id = ?
     `,

@@ -33,17 +33,20 @@ export type EnrollmentData = EnrollmentForm & {
   student_id: number;
 };
 
-export type UnenrollmentData = {
-  class_id: number;
-};
-
 export const AssignmentFormSchema = z.object({
   title: z.string().trim().min(1, "This field is required"),
   description: z.string().trim().min(1, "This field is required"),
 });
-export type AssignmentForm = z.infer<typeof AssignmentFormSchema> & {
+export type AssignmentForm = z.infer<typeof AssignmentFormSchema>;
+export type AssignmentData = AssignmentForm & {
   class_id: number;
   creator_id: number;
+};
+
+export type SubmissionData = {
+  assignment_id: number;
+  student_id: number;
+  answer: string;
 };
 
 export type AnnouncementData = {
@@ -57,6 +60,7 @@ export type Assignment = {
   title: string;
   description: string;
   created_at: string;
+  creator: string;
 };
 
 export type ApiResponse = {
@@ -86,8 +90,17 @@ export type Student = {
 
 export type ClassFeed = {
   feed_id: number;
+  id: number;
   content: string;
   type: "announcement" | "assignment";
+  creator_id: number;
   creator: string;
   created_at: string;
+};
+
+export type Submission = {
+  user_id: number;
+  student_name: string;
+  answer: string | null;
+  submitted_at: string | null;
 };

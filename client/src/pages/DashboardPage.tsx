@@ -2,8 +2,8 @@ import ClassDropdown from "@/components/ClassDropdown";
 import { useAuth } from "@/context/AuthContext";
 
 import { useGetClasses } from "@/services/classesServices";
-import { useGetStudentsInClass } from "@/services/enrollmentsServices";
 import { Class } from "@/types/types";
+import { ClipboardList, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function DashboardPage() {
@@ -23,12 +23,10 @@ type ClassCardProps = Class;
 function ClassCard({
   class_id,
   class_subject,
-  class_code,
   banner_color,
   class_section,
   class_teacher,
 }: ClassCardProps) {
-  const { data: students } = useGetStudentsInClass(class_id);
   const { currentUserQuery } = useAuth();
   const role = currentUserQuery.data?.role;
 
@@ -53,23 +51,20 @@ function ClassCard({
           class_section={class_section}
         />
       </div>
-      <div className="flex flex-1 flex-col justify-between p-5 text-slate-600">
-        {role === "teacher" && (
-          <p className="text-sm">
-            Class code:{" "}
-            <span className="text-lg font-semibold">{class_code}</span>
-          </p>
-        )}
-
-        <div className="mt-auto text-sm">
-          <p>
-            <span className="text-base">22</span> Assignments
-          </p>
-          <p>
-            <span className="text-base">{students?.length}</span> Students
-            enrolled
-          </p>
-        </div>
+      <div className="flex flex-1 flex-col justify-between p-5 text-slate-600"></div>
+      <div className="flex justify-end gap-1 border-t-2 px-2 py-1">
+        <Link
+          className="rounded-full p-3 transition hover:bg-slate-200"
+          to={`/dashboard/assignments/${class_id}`}
+        >
+          <ClipboardList />
+        </Link>
+        <Link
+          className="rounded-full p-3 transition hover:bg-slate-200"
+          to={`/dashboard/people/${class_id}`}
+        >
+          <Users />
+        </Link>
       </div>
     </div>
   );

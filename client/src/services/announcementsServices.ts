@@ -11,3 +11,14 @@ export const useCreateAnnouncement = () => {
     },
   });
 };
+
+export const useDeleteAnnouncement = () => {
+  return useMutation<ApiResponse, AxiosError<ApiResponse>, number>({
+    mutationFn: async (announcement_id) => {
+      const { data } = await apiClient.delete(
+        `/announcements/${announcement_id}`,
+      );
+      return data;
+    },
+  });
+};

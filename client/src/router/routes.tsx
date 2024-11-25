@@ -9,6 +9,7 @@ import ClassStreamPage from "@/pages/ClassStreamPage";
 import ClassPageLayout from "@/pages/ClassPageLayout";
 import ClassPeoplePage from "@/pages/ClassPeoplePage";
 import ClassAssignmentsPage from "@/pages/ClassAssignmentsPage";
+import AssignmentPage from "@/pages/AssignmentPage";
 
 export const router = createBrowserRouter([
   {
@@ -42,11 +43,16 @@ export const router = createBrowserRouter([
             element: <ClassAssignmentsPage />,
           },
           {
+            path: "/dashboard/assignments/:class_id/:assignment_id",
+            element: <AssignmentPage />,
+          },
+          {
             path: "/dashboard/people/:class_id",
             element: <ClassPeoplePage />,
           },
         ],
       },
+
       {
         path: "/to-review",
         element: <ToReviewPage />,
