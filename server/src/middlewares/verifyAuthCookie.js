@@ -3,6 +3,10 @@ import jwt from "jsonwebtoken";
 export const verifyAuthCookie = (req, res, next) => {
   const token = req.cookies.access_token;
 
+  if (!token) {
+    return res.end();
+  }
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     req.user = decoded;
