@@ -8,6 +8,8 @@ export default function ProtectedRoutes() {
   const { currentUserQuery } = useAuth();
   const [isOpen, setIsOpen] = useState(true);
 
+  if (currentUserQuery.isFetching) return;
+
   if (!currentUserQuery.data) {
     return <Navigate to="/sign-in" replace />;
   }
