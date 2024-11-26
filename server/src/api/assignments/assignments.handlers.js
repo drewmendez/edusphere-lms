@@ -12,26 +12,13 @@ export const handleGetAssignmentsInClass = async (req, res) => {
   try {
     const class_id = parseInt(req.params.class_id);
 
-    const result = await getAssignmentsInClass(class_id);
-
-    const assignments = result.map((item) => ({
-      ...item,
-      created_at: new Intl.DateTimeFormat("en-US", {
-        weekday: "short", // Short weekday, e.g., "Sat"
-        year: "numeric", // Four-digit year
-        month: "short", // Short month, e.g., "Nov"
-        day: "2-digit", // Two-digit day
-        hour: "numeric", // Hour
-        minute: "2-digit", // Two-digit minutes
-        hour12: true,
-      }).format(item.created_at),
-    }));
+    const assignments = await getAssignmentsInClass(class_id);
 
     return res.status(200).send(assignments);
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Server error " + error,
+      message: "Server error " + error.message,
     });
   }
 };
@@ -40,29 +27,49 @@ export const handleGetAssignment = async (req, res) => {
   try {
     const assignment_id = parseInt(req.params.assignment_id);
 
-    const result = await getAssignment(assignment_id);
-
-    const assignment = {
-      assignment_id: result.assignment_id,
-      title: result.title,
-      description: result.description,
-      created_at: new Intl.DateTimeFormat("en-US", {
-        weekday: "short", // Short weekday, e.g., "Sat"
-        year: "numeric", // Four-digit year
-        month: "short", // Short month, e.g., "Nov"
-        day: "2-digit", // Two-digit day
-        hour: "numeric", // Hour
-        minute: "2-digit", // Two-digit minutes
-        hour12: true,
-      }).format(result.created_at),
-      creator: `${result.firstname} ${result.lastname}`,
-    };
+    const assignment = await getAssignment(assignment_id);
 
     return res.status(200).send(assignment);
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Server error " + error,
+      message: "Server error " + error.message,
+    });
+  }
+};
+
+export const handleGetSubmissions = async (req, res) => {
+  try {
+    const assignment_id = parseInt(req.params.assignment_id);
+    const class_id = parseInt(req.params.class_id);
+
+    const submissions = await getSubmissions(assignment_id, class_id);
+
+    return res.status(200).send(submissions);
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Server error " + error.message,
+    });
+  }
+};
+
+export const handleGetSubmission = async (req, res) => {
+  try {
+    const student_id = parseInt(req.params.student_id);
+    const assignment_id = parseInt(req.params.assignment_id);
+
+    const submission = await getSubmission(student_id, assignment_id);
+
+    if (!submission) {
+      return res.status(200).send(null);
+    }
+
+    return res.status(200).send(submission);
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Server error " + error.message,
     });
   }
 };
@@ -87,89 +94,7 @@ export const handleCreateAssignment = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Server error " + error,
-    });
-  }
-};
-
-export const handleDeleteAssignment = async (req, res) => {
-  try {
-    const assignment_id = parseInt(req.params.assignment_id);
-
-    await deleteAssignment(assignment_id);
-
-    return res.status(200).json({
-      success: true,
-      message: "Assignment deleted successfully",
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Server error " + error,
-    });
-  }
-};
-
-export const handleGetSubmissions = async (req, res) => {
-  try {
-    const assignment_id = parseInt(req.params.assignment_id);
-    const class_id = parseInt(req.params.class_id);
-
-    const result = await getSubmissions(assignment_id, class_id);
-
-    const submissions = result.map((item) => ({
-      ...item,
-      submitted_at: item.submitted_at
-        ? new Intl.DateTimeFormat("en-US", {
-            weekday: "short", // Short weekday, e.g., "Sat"
-            year: "numeric", // Four-digit year
-            month: "short", // Short month, e.g., "Nov"
-            day: "2-digit", // Two-digit day
-            hour: "numeric", // Hour
-            minute: "2-digit", // Two-digit minutes
-            hour12: true,
-          }).format(item.submitted_at)
-        : null,
-    }));
-
-    return res.status(200).send(submissions);
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Server error " + error,
-    });
-  }
-};
-
-export const handleGetSubmission = async (req, res) => {
-  try {
-    const student_id = parseInt(req.params.student_id);
-    const assignment_id = parseInt(req.params.assignment_id);
-
-    const result = await getSubmission(student_id, assignment_id);
-
-    if (!result) {
-      return res.status(200).send(null);
-    }
-
-    const submission = {
-      ...result,
-      submitted_at: new Intl.DateTimeFormat("en-US", {
-        weekday: "short", // Short weekday, e.g., "Sat"
-        year: "numeric", // Four-digit year
-        month: "short", // Short month, e.g., "Nov"
-        day: "2-digit", // Two-digit day
-        hour: "numeric", // Hour
-        minute: "2-digit", // Two-digit minutes
-        hour12: true,
-      }).format(result.submitted_at),
-    };
-
-    return res.status(200).send(submission);
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Server error " + error,
+      message: "Server error " + error.message,
     });
   }
 };
@@ -194,7 +119,25 @@ export const handleSubmitAnswer = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Server error " + error,
+      message: "Server error " + error.message,
+    });
+  }
+};
+
+export const handleDeleteAssignment = async (req, res) => {
+  try {
+    const assignment_id = parseInt(req.params.assignment_id);
+
+    await deleteAssignment(assignment_id);
+
+    return res.status(200).json({
+      success: true,
+      message: "Assignment deleted successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Server error " + error.message,
     });
   }
 };

@@ -30,5 +30,17 @@ export const generateRandomBannerColor = () => {
     "#32AC71",
   ];
 
-  return COLORS[Math.floor(Math.random() * COLORS.length - 1)];
+  return COLORS[Math.floor(Math.random() * COLORS.length)];
+};
+
+export const formatDate = (date) => {
+  return new Intl.DateTimeFormat("en-US", {
+    weekday: "short", // Short weekday, e.g., "Sat"
+    year: "numeric", // Four-digit year
+    month: "short", // Short month, e.g., "Nov"
+    day: "2-digit", // Two-digit day
+    hour: "numeric", // Hour
+    minute: "2-digit", // Two-digit minutes
+    hour12: true,
+  }).format(date);
 };

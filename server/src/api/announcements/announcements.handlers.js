@@ -23,7 +23,7 @@ export const handleCreateAnnouncement = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Server error " + error,
+      message: "Server error " + error.message,
     });
   }
 };
@@ -41,7 +41,7 @@ export const handleDeleteAnnouncement = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Server error " + error,
+      message: "Server error " + error.message,
     });
   }
 };

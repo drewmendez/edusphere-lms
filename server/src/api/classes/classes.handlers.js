@@ -1,8 +1,4 @@
 import {
-  generateClassCode,
-  generateRandomBannerColor,
-} from "../../utils/helpers.js";
-import {
   createClass,
   deleteClass,
   getClass,
@@ -23,19 +19,10 @@ export const handleGetClasses = async (req, res) => {
 
       return res.status(200).json(classes);
     } else {
-      const result = await getClassesForStudentRole(user_id);
-      const classes = result.map((item) => ({
-        class_id: item.class_id,
-        class_subject: item.class_subject,
-        banner_color: item.banner_color,
-        class_section: item.class_section,
-        class_teacher: `${item.firstname} ${item.lastname}`,
-      }));
+      const classes = await getClassesForStudentRole(user_id);
 
       return res.status(200).json(classes);
     }
-
-    // TODO: get classes for student role
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -48,13 +35,13 @@ export const handleGetClass = async (req, res) => {
   try {
     const class_id = parseInt(req.params.class_id);
 
-    const result = await getClass(class_id);
+    const classData = await getClass(class_id);
 
-    return res.status(200).send(result);
+    return res.status(200).send(classData);
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Server error " + error,
+      message: "Server error " + error.message,
     });
   }
 };
@@ -63,19 +50,13 @@ export const handleGetPeopleInClass = async (req, res) => {
   try {
     const class_id = parseInt(req.params.class_id);
 
-    const result = await getPeopleInClass(class_id);
-
-    const people = result.map((item) => ({
-      user_id: item.user_id,
-      user: `${item.firstname} ${item.lastname}`,
-      role: item.role,
-    }));
+    const people = await getPeopleInClass(class_id);
 
     return res.status(200).send(people);
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Server error " + error,
+      message: "Server error " + error.message,
     });
   }
 };
@@ -91,16 +72,7 @@ export const handleCreateClass = async (req, res) => {
   }
 
   try {
-    const class_code = generateClassCode();
-    const banner_color = generateRandomBannerColor();
-
-    await createClass(
-      class_subject,
-      class_code,
-      banner_color,
-      class_section,
-      teacher_id
-    );
+    await createClass(class_subject, class_section, teacher_id);
 
     return res.status(201).json({
       success: true,
@@ -109,7 +81,7 @@ export const handleCreateClass = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Server error " + error,
+      message: "Server error " + error.message,
     });
   }
 };
@@ -127,7 +99,7 @@ export const handleDeleteClass = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Server error " + error,
+      message: "Server error " + error.message,
     });
   }
 };
@@ -154,7 +126,7 @@ export const handleUpdateClass = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Server error " + error,
+      message: "Server error " + error.message,
     });
   }
 };

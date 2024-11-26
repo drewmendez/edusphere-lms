@@ -4,25 +4,7 @@ export const handleGetClassFeeds = async (req, res) => {
   try {
     const class_id = parseInt(req.params.class_id);
 
-    const result = await getClassFeeds(class_id);
-
-    const classFeeds = result.map((item) => ({
-      feed_id: item.feed_id,
-      id: item.id,
-      content: item.content,
-      type: item.type,
-      creator_id: item.creator_id,
-      creator: `${item.firstname} ${item.lastname}`,
-      created_at: new Intl.DateTimeFormat("en-US", {
-        weekday: "short", // Short weekday, e.g., "Sat"
-        year: "numeric", // Four-digit year
-        month: "short", // Short month, e.g., "Nov"
-        day: "2-digit", // Two-digit day
-        hour: "numeric", // Hour
-        minute: "2-digit", // Two-digit minutes
-        hour12: true,
-      }).format(item.created_at),
-    }));
+    const classFeeds = await getClassFeeds(class_id);
 
     return res.send(classFeeds);
   } catch (error) {

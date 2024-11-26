@@ -1,10 +1,9 @@
 import {
   createUser,
   getCurrentUser,
-  getUserByEmail,
-  getUserEmail,
+  getUserData,
+  isEmailRegistered,
 } from "./auth.services.js";
-import { capitalize } from "../../utils/helpers.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -19,9 +18,7 @@ export const handleSignUp = async (req, res) => {
   }
 
   try {
-    const emails = await getUserEmail(email);
-
-    if (emails.length) {
+    if (await isEmailRegistered(email)) {
       return res.status(400).json({
         success: false,
         error: "email",
@@ -31,13 +28,7 @@ export const handleSignUp = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 8);
 
-    await createUser(
-      capitalize(firstname),
-      capitalize(lastname),
-      role,
-      email,
-      hashedPassword
-    );
+    await createUser(firstname, lastname, role, email, hashedPassword);
 
     return res.status(201).json({
       success: true,
@@ -46,7 +37,7 @@ export const handleSignUp = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Server error " + error,
+      message: "Server error: " + error.message,
     });
   }
 };
@@ -62,9 +53,9 @@ export const handleSignIn = async (req, res) => {
   }
 
   try {
-    const result = await getUserByEmail(email);
+    const userData = await getUserData(email);
 
-    if (!result) {
+    if (!userData) {
       return res.status(400).json({
         success: false,
         error: "email",
@@ -72,7 +63,7 @@ export const handleSignIn = async (req, res) => {
       });
     }
 
-    if (!(await bcrypt.compare(password, result.password))) {
+    if (!(await bcrypt.compare(password, userData.password))) {
       return res.status(400).json({
         success: false,
         error: "password",
@@ -81,8 +72,8 @@ export const handleSignIn = async (req, res) => {
     }
 
     const user = {
-      user_id: result.user_id,
-      role: result.role,
+      user_id: userData.user_id,
+      role: userData.role,
     };
 
     const token = jwt.sign(user, process.env.JWT_SECRET_KEY);
@@ -101,7 +92,7 @@ export const handleSignIn = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Server error " + error,
+      message: "Server error " + error.message,
     });
   }
 };
@@ -117,19 +108,13 @@ export const handleGetCurrentUser = async (req, res) => {
   const { user_id } = req.user;
 
   try {
-    const result = await getCurrentUser(user_id);
+    const currentUser = await getCurrentUser(user_id);
 
-    const user = {
-      user_id: result.user_id,
-      user: `${result.firstname} ${result.lastname}`,
-      role: result.role,
-    };
-
-    return res.status(200).send(user);
+    return res.status(200).send(currentUser);
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Server error " + error,
+      message: "Server error " + error.message,
     });
   }
 };
