@@ -62,7 +62,7 @@ export default function SignUpPage() {
             <div className="flex flex-col items-center gap-3">
               <div className="flex items-center gap-2">
                 <img className="size-9" src={Logo} alt="" />
-                <p className="font-semibold">EduConnect</p>
+                <p className="font-semibold">EduSphere</p>
               </div>
               <p className="text-sm">Sign up to continue</p>
             </div>

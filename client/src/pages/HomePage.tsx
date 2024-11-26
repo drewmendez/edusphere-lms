@@ -26,13 +26,13 @@ export default function HomePage() {
               <img src={HomeImage} alt="home-image" />
             </div>
             <div className="flex-1 space-y-4">
-              <h1 className="text-3xl font-bold text-slate-700 md:text-5xl">
-                EduConnect: Empowering Learning, Anywhere
+              <h1 className="text-3xl font-bold text-slate-700 md:text-5xl md:leading-tight">
+                Empowering Learning, One Class at a Time
               </h1>
               <p className="text-slate-700">
-                Join your classroom from anywhere. EduConnect simplifies
-                learning with a single platform for assignments, resources, and
-                class collaboration—designed to keep you connected and on track.
+                EduSphere empowers teachers and students with tools to manage
+                classes, assignments, and progress — simplifying education for
+                everyone.
               </p>
 
               <Button size="lg">

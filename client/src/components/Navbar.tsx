@@ -24,7 +24,7 @@ export default function Navbar({ setIsOpen }: NavbarProps) {
           </button>
         )}
         <img className="mr-4 size-9" src={Logo} alt="classroom logo" />
-        EduConnect
+        EduSphere
       </div>
       <div className="flex items-center gap-4">
         {currentUserQuery.data ? (
