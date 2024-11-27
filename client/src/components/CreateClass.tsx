@@ -15,12 +15,13 @@ import FormField from "./FormField";
 import { useCreateClass, useGetClasses } from "@/services/classesServices";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useAuth } from "@/context/AuthContext";
+import { useCurrentUser } from "@/context/CurrentUserContext";
 
 export default function CreateClass() {
   const [isOpen, setIsOpen] = useState(false);
-  const { currentUserQuery } = useAuth();
-  const teacher_id = currentUserQuery.data?.user_id;
+
+  const { currentUser } = useCurrentUser();
+  const teacher_id = currentUser?.user_id;
 
   const {
     register,

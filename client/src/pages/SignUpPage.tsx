@@ -12,11 +12,13 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { SignUpForm, SignUpFormSchema } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
+import { useCurrentUser } from "@/context/CurrentUserContext";
+import { useSignUp } from "@/services/authServices";
 
 export default function SignUpPage() {
-  const { signUpMutation, currentUserQuery } = useAuth();
+  const { currentUser } = useCurrentUser();
+  const { mutate: signUp } = useSignUp();
   const navigate = useNavigate();
 
   const {
@@ -29,7 +31,7 @@ export default function SignUpPage() {
   });
 
   const onSignUp = (data: SignUpForm) => {
-    signUpMutation.mutate(data, {
+    signUp(data, {
       onSuccess: (data) => {
         toast(data.message);
         navigate("/sign-in", { replace: true });
@@ -50,7 +52,7 @@ export default function SignUpPage() {
     });
   };
 
-  if (currentUserQuery.data) {
+  if (currentUser) {
     return <Navigate to="/dashboard" replace />;
   }
 

@@ -1,24 +1,24 @@
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../assets/logo.png";
 import { Button } from "./ui/button";
-import { useAuth } from "@/context/AuthContext";
 import { Menu } from "lucide-react";
 import CreateClass from "./CreateClass";
 import JoinClass from "./JoinClass";
+import { useCurrentUser } from "@/context/CurrentUserContext";
 
 interface NavbarProps {
   setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function Navbar({ setIsOpen }: NavbarProps) {
-  const { currentUserQuery } = useAuth();
+  const { currentUser } = useCurrentUser();
 
   const { pathname } = useLocation();
 
   return (
     <nav className="flex items-center justify-between">
       <div className="flex items-center font-semibold">
-        {currentUserQuery.data && (
+        {currentUser && (
           <button className="mr-6" onClick={() => setIsOpen!((prev) => !prev)}>
             <Menu />
           </button>
@@ -27,14 +27,10 @@ export default function Navbar({ setIsOpen }: NavbarProps) {
         EduSphere
       </div>
       <div className="flex items-center gap-4">
-        {currentUserQuery.data ? (
+        {currentUser ? (
           pathname === "/dashboard" && (
             <>
-              {currentUserQuery.data.role === "teacher" ? (
-                <CreateClass />
-              ) : (
-                <JoinClass />
-              )}
+              {currentUser.role === "teacher" ? <CreateClass /> : <JoinClass />}
             </>
           )
         ) : (

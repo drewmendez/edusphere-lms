@@ -1,5 +1,5 @@
 import ClassDropdown from "@/components/ClassDropdown";
-import { useAuth } from "@/context/AuthContext";
+import { useCurrentUser } from "@/context/CurrentUserContext";
 
 import { useGetClasses } from "@/services/classesServices";
 import { Class } from "@/types/types";
@@ -27,8 +27,7 @@ function ClassCard({
   class_section,
   class_teacher,
 }: ClassCardProps) {
-  const { currentUserQuery } = useAuth();
-  const role = currentUserQuery.data?.role;
+  const { currentUser } = useCurrentUser();
 
   return (
     <div className="flex h-[296px] w-[302px] flex-col overflow-hidden rounded-xl border-2 transition hover:shadow-md">
@@ -43,7 +42,7 @@ function ClassCard({
             </p>
           </Link>
           <p className="text-sm">{class_section}</p>
-          {role === "student" && <p>{class_teacher}</p>}
+          {currentUser?.role === "student" && <p>{class_teacher}</p>}
         </div>
         <ClassDropdown
           class_id={class_id}

@@ -25,8 +25,8 @@ import { useForm } from "react-hook-form";
 import { ClassForm, ClassFormSchema } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { useAuth } from "@/context/AuthContext";
 import { useUnenrollToClass } from "@/services/enrollmentsServices";
+import { useCurrentUser } from "@/context/CurrentUserContext";
 
 interface ClassDropdownProps {
   class_id: number;
@@ -39,9 +39,9 @@ export default function ClassDropdown({
   class_subject,
   class_section,
 }: ClassDropdownProps) {
-  const { currentUserQuery } = useAuth();
-  const role = currentUserQuery.data?.role;
-  const student_id = currentUserQuery.data?.user_id;
+  const { currentUser } = useCurrentUser();
+  const role = currentUser?.role;
+  const student_id = currentUser?.user_id;
 
   const [isOpen, setIsOpen] = useState(false);
   const { refetch: refetchClasses } = useGetClasses();

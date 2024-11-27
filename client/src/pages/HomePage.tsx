@@ -3,12 +3,14 @@ import HomeImage from "../assets/home-image.jpg";
 import { Link, Navigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { useAuth } from "@/context/AuthContext";
+import { useCurrentUser } from "@/context/CurrentUserContext";
 
 export default function HomePage() {
-  const { currentUserQuery } = useAuth();
+  const { currentUser, isFetchingCurrentUser } = useCurrentUser();
 
-  if (currentUserQuery.data) {
+  if (isFetchingCurrentUser) return;
+
+  if (currentUser) {
     return <Navigate to="/dashboard" replace />;
   }
 

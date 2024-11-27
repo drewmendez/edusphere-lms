@@ -15,15 +15,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useJoinClass } from "@/services/enrollmentsServices";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useAuth } from "@/context/AuthContext";
 import { useGetClasses } from "@/services/classesServices";
+import { useCurrentUser } from "@/context/CurrentUserContext";
 
 export default function JoinClass() {
   const [isOpen, setIsOpen] = useState(false);
   const { mutate: joinClass } = useJoinClass();
   const { refetch: refetchClasses } = useGetClasses();
-  const { currentUserQuery } = useAuth();
-  const student_id = currentUserQuery.data?.user_id;
+  const { currentUser } = useCurrentUser();
+  const student_id = currentUser?.user_id;
 
   const {
     register,

@@ -7,16 +7,18 @@ import {
 import Logo from "../assets/logo.png";
 import FormField from "@/components/FormField";
 import { Button } from "@/components/ui/button";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { SignInForm, SignInFormSchema } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuth } from "@/context/AuthContext";
+
 import { toast } from "sonner";
+import { useCurrentUser } from "@/context/CurrentUserContext";
+import { useSignIn } from "@/services/authServices";
 
 export default function SignInPage() {
-  const { signInMutation, currentUserQuery } = useAuth();
-  const navigate = useNavigate();
+  const { currentUser } = useCurrentUser();
+  const { mutate: signIn } = useSignIn();
 
   const {
     register,
@@ -28,10 +30,8 @@ export default function SignInPage() {
   });
 
   const onSignIn = (data: SignInForm) => {
-    signInMutation.mutate(data, {
-      onSuccess: async (response) => {
-        await currentUserQuery.refetch();
-        navigate("/dashboard", { replace: true });
+    signIn(data, {
+      onSuccess: (response) => {
         toast(response.message);
       },
       onError: (error) => {
@@ -55,7 +55,7 @@ export default function SignInPage() {
     });
   };
 
-  if (currentUserQuery.data) {
+  if (currentUser) {
     return <Navigate to="/dashboard" replace />;
   }
 

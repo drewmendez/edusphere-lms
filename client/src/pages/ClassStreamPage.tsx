@@ -1,7 +1,7 @@
 import AnnouncementDropdown from "@/components/AnnouncementDropdown";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useAuth } from "@/context/AuthContext";
+import { useCurrentUser } from "@/context/CurrentUserContext";
 import { cn } from "@/lib/utils";
 import { useCreateAnnouncement } from "@/services/announcementsServices";
 import { useGetClass } from "@/services/classesServices";
@@ -17,9 +17,10 @@ export default function ClassStreamPage() {
   const [announcement, setAnnouncement] = useState("");
   const params = useParams();
   const class_id = parseInt(params.class_id!);
-  const { currentUserQuery } = useAuth();
-  const role = currentUserQuery.data?.role;
-  const announcer_id = currentUserQuery.data?.user_id;
+
+  const { currentUser } = useCurrentUser();
+  const role = currentUser?.role;
+  const announcer_id = currentUser?.user_id;
 
   const { data: classData } = useGetClass(class_id);
   const { data: classFeeds, refetch: refetchClassFeeds } =

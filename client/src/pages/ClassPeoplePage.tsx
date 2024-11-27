@@ -1,11 +1,11 @@
-import { useAuth } from "@/context/AuthContext";
+import { useCurrentUser } from "@/context/CurrentUserContext";
 import { useGetPeopleInClass } from "@/services/classesServices";
 import { useParams } from "react-router-dom";
 
 export default function ClassPeoplePage() {
-  const { currentUserQuery } = useAuth();
-  const role = currentUserQuery.data?.role;
-  const currentUserId = currentUserQuery.data?.user_id;
+  const { currentUser } = useCurrentUser();
+  const role = currentUser?.role;
+  const currentUserId = currentUser?.user_id;
 
   const { class_id } = useParams();
   const parsedClassId = parseInt(class_id!);

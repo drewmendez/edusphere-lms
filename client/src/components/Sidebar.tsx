@@ -1,4 +1,3 @@
-import { useAuth } from "@/context/AuthContext";
 import {
   ChevronRight,
   Folder,
@@ -12,6 +11,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import SignOutDialog from "./SignOutDialog";
 import { useEffect, useState } from "react";
 import { useGetClasses } from "@/services/classesServices";
+import { useCurrentUser } from "@/context/CurrentUserContext";
 
 const sidebarNavs = {
   teacher: [
@@ -46,8 +46,8 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
-  const { currentUserQuery } = useAuth();
-  const role = currentUserQuery.data?.role;
+  const { currentUser } = useCurrentUser();
+  const role = currentUser?.role;
   const [isDropdownOpen, setIsDropdownOpen] = useState(true);
   const { data: classes } = useGetClasses();
 

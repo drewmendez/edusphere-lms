@@ -19,7 +19,7 @@ import {
 } from "@/services/assignmentsServices";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useAuth } from "@/context/AuthContext";
+import { useCurrentUser } from "@/context/CurrentUserContext";
 
 interface CreateAssignmentProps {
   class_id: number;
@@ -27,8 +27,9 @@ interface CreateAssignmentProps {
 
 export default function CreateAssignment({ class_id }: CreateAssignmentProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const { currentUserQuery } = useAuth();
-  const creator_id = currentUserQuery.data?.user_id;
+
+  const { currentUser } = useCurrentUser();
+  const creator_id = currentUser?.user_id;
   const {
     register,
     handleSubmit,

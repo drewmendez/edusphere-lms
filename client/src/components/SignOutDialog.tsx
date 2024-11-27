@@ -3,6 +3,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -10,18 +11,17 @@ import {
 } from "@/components/ui/alert-dialog";
 import { buttonVariants } from "./ui/button";
 import { LogOut } from "lucide-react";
-import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useSignOut } from "@/services/authServices";
 
 export default function SignOutDialog() {
-  const { currentUserQuery, signOutMutation } = useAuth();
+  const { mutate: signOut } = useSignOut();
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-    signOutMutation.mutate(undefined, {
-      onSuccess: async (response) => {
-        await currentUserQuery.refetch();
+    signOut(undefined, {
+      onSuccess: (response) => {
         navigate("/", { replace: true });
         toast(response.message);
       },
@@ -42,6 +42,7 @@ export default function SignOutDialog() {
         <AlertDialogHeader>
           <AlertDialogTitle>Do you really want to sign out?</AlertDialogTitle>
         </AlertDialogHeader>
+        <AlertDialogDescription></AlertDialogDescription>
         <AlertDialogFooter>
           <AlertDialogCancel>No</AlertDialogCancel>
           <AlertDialogAction

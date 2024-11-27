@@ -1,6 +1,6 @@
 import AssignmentDropdown from "@/components/AssignmentDropdown";
 import CreateAssignment from "@/components/CreateAssignment";
-import { useAuth } from "@/context/AuthContext";
+import { useCurrentUser } from "@/context/CurrentUserContext";
 import { useGetAssignmentsInClass } from "@/services/assignmentsServices";
 import { useGetClass } from "@/services/classesServices";
 import { Assignment } from "@/types/types";
@@ -8,8 +8,8 @@ import { ClipboardList } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 
 export default function ClassAssignmentsPage() {
-  const { currentUserQuery } = useAuth();
-  const role = currentUserQuery.data?.role;
+  const { currentUser } = useCurrentUser();
+  const role = currentUser?.role;
 
   const params = useParams();
   const class_id = parseInt(params.class_id!);

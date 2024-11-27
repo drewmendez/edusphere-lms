@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useAuth } from "@/context/AuthContext";
+import { useCurrentUser } from "@/context/CurrentUserContext";
 import {
   useGetAssignment,
   useGetSubmission,
@@ -12,9 +12,9 @@ import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function AssignmentPage() {
-  const { currentUserQuery } = useAuth();
+  const { currentUser } = useCurrentUser();
 
-  const role = currentUserQuery.data?.role;
+  const role = currentUser?.role;
 
   const params = useParams();
   const assignment_id = parseInt(params.assignment_id!);
@@ -103,8 +103,8 @@ function TeacherView({ assignment_id }: ViewProps) {
 }
 
 function StudentView({ assignment_id }: ViewProps) {
-  const { currentUserQuery } = useAuth();
-  const student_id = currentUserQuery.data?.user_id;
+  const { currentUser } = useCurrentUser();
+  const student_id = currentUser?.user_id;
 
   const { data: submission, refetch: refetchSubmission } = useGetSubmission(
     student_id!,
