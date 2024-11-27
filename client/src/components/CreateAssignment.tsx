@@ -37,6 +37,9 @@ export default function CreateAssignment({ class_id }: CreateAssignmentProps) {
     formState: { errors },
   } = useForm<AssignmentForm>({
     resolver: zodResolver(AssignmentFormSchema),
+    defaultValues: {
+      points: 100,
+    },
   });
 
   const { mutate: createAssignment } = useCreateAssignment();
@@ -85,6 +88,14 @@ export default function CreateAssignment({ class_id }: CreateAssignmentProps) {
               label="Instructions"
               {...register("description")}
               error={errors.description?.message}
+            />
+            <FormField
+              className="w-1/4"
+              label="Points"
+              type="number"
+              min={1}
+              {...register("points", { valueAsNumber: true })}
+              error={errors.points?.message}
             />
           </div>
           <Button>Assign</Button>

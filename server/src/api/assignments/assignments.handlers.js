@@ -6,6 +6,7 @@ import {
   getSubmission,
   getSubmissions,
   submitAnswer,
+  submitGrade,
 } from "./assignments.services.js";
 
 export const handleGetAssignmentsInClass = async (req, res) => {
@@ -75,9 +76,9 @@ export const handleGetSubmission = async (req, res) => {
 };
 
 export const handleCreateAssignment = async (req, res) => {
-  const { title, description, class_id, creator_id } = req.body;
+  const { title, description, points, class_id, creator_id } = req.body;
 
-  if (!title || !description || !class_id || !creator_id) {
+  if (!title || !description || !points || !class_id || !creator_id) {
     return res.status(400).json({
       success: false,
       message: "All fields are required",
@@ -85,7 +86,7 @@ export const handleCreateAssignment = async (req, res) => {
   }
 
   try {
-    await createAssignment(title, description, class_id, creator_id);
+    await createAssignment(title, description, points, class_id, creator_id);
 
     return res.status(201).json({
       success: true,
@@ -115,6 +116,35 @@ export const handleSubmitAnswer = async (req, res) => {
     return res.status(201).json({
       success: true,
       message: "Answer submitted successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Server error " + error.message,
+    });
+  }
+};
+
+export const handleSubmitGrade = async (req, res) => {
+  const { given_points } = req.body;
+
+  if (!given_points) {
+    return res.status(400).json({
+      success: false,
+      message: "Grade is required",
+    });
+  }
+
+  try {
+    const assignment_completion_id = parseInt(
+      req.params.assignment_completion_id
+    );
+
+    await submitGrade(given_points, assignment_completion_id);
+
+    return res.status(200).json({
+      success: true,
+      message: "Grade submitted successfully",
     });
   } catch (error) {
     return res.status(500).json({

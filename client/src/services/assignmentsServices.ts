@@ -60,7 +60,7 @@ export const useGetSubmissions = (assignment_id: number, class_id: number) => {
 };
 
 export const useGetSubmission = (student_id: number, assignment_id: number) => {
-  return useQuery<{ answer: string; submitted_at: string }>({
+  return useQuery<Submission>({
     queryKey: ["submission", student_id, assignment_id],
     queryFn: async () => {
       const { data } = await apiClient.get(
@@ -77,6 +77,22 @@ export const useSubmitAnswer = () => {
       const { data } = await apiClient.post(
         "/assignments/submissions",
         submissionData,
+      );
+      return data;
+    },
+  });
+};
+
+export const useSubmitGrade = (assignment_completion_id: number) => {
+  return useMutation<
+    ApiResponse,
+    AxiosError<ApiResponse>,
+    { given_points: number }
+  >({
+    mutationFn: async (pointsData) => {
+      const { data } = await apiClient.patch(
+        `/assignments/submissions/${assignment_completion_id}`,
+        pointsData,
       );
       return data;
     },

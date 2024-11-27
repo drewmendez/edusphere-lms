@@ -5,10 +5,8 @@ import { useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 export default function ProtectedRoutes() {
-  const { currentUser, isFetchingCurrentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUser();
   const [isOpen, setIsOpen] = useState(true);
-
-  if (isFetchingCurrentUser) return;
 
   if (!currentUser) {
     return <Navigate to="/sign-in" replace />;

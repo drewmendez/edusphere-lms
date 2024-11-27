@@ -1,3 +1,4 @@
+import AddPoints from "@/components/AddPoints";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useCurrentUser } from "@/context/CurrentUserContext";
@@ -30,6 +31,7 @@ export default function AssignmentPage() {
             <span>{assignment?.creator}</span> •{" "}
             <span>{assignment?.created_at}</span>
           </p>
+          <p>{assignment?.points} points</p>
         </div>
 
         <div className="py-5">
@@ -53,7 +55,10 @@ interface ViewProps {
 function TeacherView({ assignment_id }: ViewProps) {
   const params = useParams();
   const class_id = parseInt(params.class_id!);
-  const { data: submissions } = useGetSubmissions(assignment_id, class_id);
+  const { data: submissions, refetch: refetchSubmissions } = useGetSubmissions(
+    assignment_id,
+    class_id,
+  );
 
   return (
     <div className="flex flex-col gap-6 pt-5">
@@ -81,15 +86,39 @@ function TeacherView({ assignment_id }: ViewProps) {
 
       <div className="flex w-full max-w-[500px] flex-col gap-4">
         {submissions?.map((submission) => (
-          <div key={submission.user_id} className="rounded-lg bg-gray-200 p-3">
-            <div className="flex items-center justify-between">
-              <p>{submission.student_name}</p>
-              <p className="text-xs text-gray-500">
-                {submission.answer ? "Handed in" : "Assigned"}
-              </p>
+          <div
+            key={submission.user_id}
+            className="relative rounded-lg bg-gray-200 p-3"
+          >
+            <div className="flex justify-between">
+              <div>
+                <p>{submission.student_name}</p>
+                <p className="text-xs text-gray-500">
+                  {submission.submitted_at}
+                </p>
+              </div>
+              {submission.given_points ? (
+                <div className="text-right">
+                  <p className="text-xs text-gray-500">Marked</p>
+                  <p className="text-sm">
+                    {submission.given_points}/{submission.points}
+                  </p>
+                </div>
+              ) : submission.answer ? (
+                <p className="text-xs text-gray-500">Handed in</p>
+              ) : (
+                <p className="text-xs text-gray-500">Assigned</p>
+              )}
             </div>
 
-            <p className="text-xs text-gray-500">{submission.submitted_at}</p>
+            {submission.answer && !submission.given_points && (
+              <AddPoints
+                points={submission.points}
+                assignment_completion_id={submission.assignment_completion_id!}
+                refetchSubmissions={refetchSubmissions}
+              />
+            )}
+
             {submission.answer && (
               <p className="mt-2 whitespace-pre-wrap border-t-2 border-t-white pt-2">
                 {submission.answer}
@@ -136,8 +165,20 @@ function StudentView({ assignment_id }: ViewProps) {
       {submission ? (
         <>
           <p className="text-3xl">Your work</p>
-          <div className="divide-y-2 divide-gray-50 rounded-lg bg-gray-200 p-3">
-            <p className="pb-2 text-xs">{submission.submitted_at}</p>
+          <div className="divide-y-2 divide-gray-50 rounded-lg bg-gray-200 p-5">
+            <div className="flex items-center justify-between pb-2">
+              <p className="text-xs">{submission.submitted_at}</p>
+              {submission.given_points ? (
+                <p className="text-xs">
+                  Marked{" "}
+                  <span className="font-semibold">
+                    {submission.given_points}/{submission.points}
+                  </span>
+                </p>
+              ) : (
+                <p className="text-xs">Handed in</p>
+              )}
+            </div>
             <p className="whitespace-pre-wrap pt-2">{submission.answer}</p>
           </div>
         </>

@@ -36,6 +36,7 @@ export type EnrollmentData = EnrollmentForm & {
 export const AssignmentFormSchema = z.object({
   title: z.string().trim().min(1, "This field is required"),
   description: z.string().trim().min(1, "This field is required"),
+  points: z.number({ invalid_type_error: "This field is required" }).min(1),
 });
 export type AssignmentForm = z.infer<typeof AssignmentFormSchema>;
 export type AssignmentData = AssignmentForm & {
@@ -59,6 +60,7 @@ export type Assignment = {
   assignment_id: number;
   title: string;
   description: string;
+  points: number;
   created_at: string;
   creator: string;
 };
@@ -95,8 +97,11 @@ export type ClassFeed = {
 };
 
 export type Submission = {
-  user_id: number;
-  student_name: string;
+  assignment_completion_id?: number;
+  user_id?: number;
+  student_name?: string;
   answer: string | null;
   submitted_at: string | null;
+  points: number;
+  given_points: number | null;
 };

@@ -6,9 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { useCurrentUser } from "@/context/CurrentUserContext";
 
 export default function HomePage() {
-  const { currentUser, isFetchingCurrentUser } = useCurrentUser();
-
-  if (isFetchingCurrentUser) return;
+  const { currentUser } = useCurrentUser();
 
   if (currentUser) {
     return <Navigate to="/dashboard" replace />;

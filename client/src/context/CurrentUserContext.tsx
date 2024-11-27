@@ -4,7 +4,6 @@ import { createContext, ReactNode, useContext } from "react";
 
 interface CurrentUserContext {
   currentUser: User | undefined;
-  isFetchingCurrentUser: boolean;
 }
 
 const CurrentUserContext = createContext<CurrentUserContext | null>(null);
@@ -17,8 +16,15 @@ export default function CurrentUserContextProvider({
   const { data: currentUser, isFetching: isFetchingCurrentUser } =
     useGetCurrentUser();
 
+  if (isFetchingCurrentUser)
+    return (
+      <p className="flex h-screen items-center justify-center">
+        Authenticating...
+      </p>
+    );
+
   return (
-    <CurrentUserContext.Provider value={{ currentUser, isFetchingCurrentUser }}>
+    <CurrentUserContext.Provider value={{ currentUser }}>
       {children}
     </CurrentUserContext.Provider>
   );

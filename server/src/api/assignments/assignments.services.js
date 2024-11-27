@@ -27,7 +27,7 @@ export const getAssignmentsInClass = async (class_id) => {
 
 export const getAssignment = async (assignment_id) => {
   const query = `
-    SELECT a.assignment_id, a.title, a.description, a.created_at, CONCAT(u.firstname, " ", u.lastname) AS creator 
+    SELECT a.assignment_id, a.title, a.description, a.points, a.created_at, CONCAT(u.firstname, " ", u.lastname) AS creator 
     FROM assignments a
     JOIN users u ON a.creator_id = u.user_id
     WHERE a.assignment_id = ?
@@ -51,7 +51,7 @@ export const getAssignment = async (assignment_id) => {
 
 export const getSubmissions = async (assignment_id, class_id) => {
   const query = `
-    SELECT u.user_id, CONCAT(u.firstname, " ", u.lastname) AS student_name, ac.answer, ac.submitted_at
+    SELECT ac.assignment_completion_id, u.user_id, CONCAT(u.firstname, " ", u.lastname) AS student_name, ac.answer, ac.submitted_at, a.points, ac.given_points
     FROM enrollments e
     JOIN users u ON e.student_id = u.user_id
     LEFT JOIN assignment_completions ac ON e.student_id = ac.student_id AND ac.assignment_id = ?
@@ -78,9 +78,10 @@ export const getSubmissions = async (assignment_id, class_id) => {
 
 export const getSubmission = async (student_id, assignment_id) => {
   const query = `
-    SELECT answer, submitted_at
-    FROM assignment_completions
-    WHERE student_id = ? AND assignment_id = ?
+    SELECT ac.answer, ac.submitted_at, ac.given_points, a.points
+    FROM assignment_completions ac
+    JOIN assignments a ON ac.assignment_id = a.assignment_id
+    WHERE ac.student_id = ? AND ac.assignment_id = ?
   `;
   const values = [student_id, assignment_id];
 
@@ -104,14 +105,15 @@ export const getSubmission = async (student_id, assignment_id) => {
 export const createAssignment = async (
   title,
   description,
+  points,
   class_id,
   creator_id
 ) => {
   const query = `
-    INSERT INTO assignments (title, description, class_id, creator_id)
-    VALUES (?,?,?,?)
+    INSERT INTO assignments (title, description, points, class_id, creator_id)
+    VALUES (?,?,?,?,?)
   `;
-  const values = [title, description, class_id, creator_id];
+  const values = [title, description, points, class_id, creator_id];
 
   try {
     await pool.query(query, values);
@@ -127,6 +129,22 @@ export const submitAnswer = async (assignment_id, student_id, answer) => {
     VALUES (?,?,?)
   `;
   const values = [assignment_id, student_id, answer];
+
+  try {
+    await pool.query(query, values);
+  } catch (error) {
+    console.error(error);
+    throw new Error("Database error");
+  }
+};
+
+export const submitGrade = async (given_points, assignment_completion_id) => {
+  const query = `
+    UPDATE assignment_completions
+    SET given_points = ?
+    WHERE assignment_completion_id = ?
+  `;
+  const values = [given_points, assignment_completion_id];
 
   try {
     await pool.query(query, values);

@@ -8,6 +8,7 @@ import {
   handleGetSubmission,
   handleGetSubmissions,
   handleSubmitAnswer,
+  handleSubmitGrade,
 } from "./assignments.handlers.js";
 
 const router = express.Router();
@@ -27,6 +28,12 @@ router.get(
 
 router.post("/", verifyAuthCookie, handleCreateAssignment);
 router.post("/submissions", verifyAuthCookie, handleSubmitAnswer);
+
+router.patch(
+  "/submissions/:assignment_completion_id",
+  verifyAuthCookie,
+  handleSubmitGrade
+);
 
 router.delete("/:assignment_id", verifyAuthCookie, handleDeleteAssignment);
 
