@@ -4,7 +4,7 @@ import { useCurrentUser } from "@/context/CurrentUserContext";
 import { useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
-export default function ProtectedRoutes() {
+export default function ProtectedRouteLayout() {
   const { currentUser } = useCurrentUser();
   const [isOpen, setIsOpen] = useState(true);
 

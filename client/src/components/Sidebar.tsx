@@ -13,33 +13,6 @@ import { useEffect, useState } from "react";
 import { useGetClasses } from "@/services/classesServices";
 import { useCurrentUser } from "@/context/CurrentUserContext";
 
-const sidebarNavs = {
-  teacher: [
-    {
-      icon: <Home />,
-      link: "/dashboard",
-      text: "Home",
-    },
-    {
-      icon: <Folder />,
-      link: "/to-review",
-      text: "To Review",
-    },
-  ],
-  student: [
-    {
-      icon: <Home />,
-      link: "/dashboard",
-      text: "Home",
-    },
-    {
-      icon: <ListTodo />,
-      link: "/to-do",
-      text: "To Do",
-    },
-  ],
-};
-
 interface SidebarProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -50,6 +23,33 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
   const role = currentUser?.role;
   const [isDropdownOpen, setIsDropdownOpen] = useState(true);
   const { data: classes } = useGetClasses();
+
+  const sidebarNavs = {
+    teacher: [
+      {
+        icon: <Home />,
+        link: "/dashboard",
+        text: "Home",
+      },
+      {
+        icon: <Folder />,
+        link: "/to-review",
+        text: "To Review",
+      },
+    ],
+    student: [
+      {
+        icon: <Home />,
+        link: "/dashboard",
+        text: "Home",
+      },
+      {
+        icon: <ListTodo />,
+        link: `/to-do/assigned/all`,
+        text: "To Do",
+      },
+    ],
+  };
 
   const { pathname } = useLocation();
   const params = useParams();
@@ -102,7 +102,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
               classes?.map((item) => (
                 <Link
                   key={item.class_id}
-                  className={`mr-3 flex items-center gap-7 overflow-hidden rounded-br-full rounded-tr-full py-2 pl-7 text-sm transition hover:bg-slate-200 ${Number(params.class_id!) === item.class_id && "bg-blue-100"}`}
+                  className={`mr-3 flex items-center gap-7 overflow-hidden rounded-br-full rounded-tr-full py-2 pl-7 text-sm transition hover:bg-slate-200 ${Number(params.class_id!) === item.class_id && pathname.includes("dashboard") && "bg-blue-100"}`}
                   to={`dashboard/stream/${item.class_id}`}
                 >
                   <div

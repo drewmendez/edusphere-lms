@@ -23,28 +23,26 @@ export default function AssignmentPage() {
   const { data: assignment } = useGetAssignment(assignment_id);
 
   return (
-    <section className="flex w-full justify-center p-6">
-      <div className="w-full max-w-[800px] divide-y-2">
-        <div className="flex flex-col gap-2 pb-5">
-          <p className="text-5xl">{assignment?.title}</p>
-          <p className="text-sm">
-            <span>{assignment?.creator}</span> •{" "}
-            <span>{assignment?.created_at}</span>
-          </p>
-          <p>{assignment?.points} points</p>
-        </div>
-
-        <div className="py-5">
-          <p className="whitespace-pre-wrap">{assignment?.description}</p>
-        </div>
-
-        {role === "teacher" ? (
-          <TeacherView assignment_id={assignment_id} />
-        ) : (
-          <StudentView assignment_id={assignment_id} />
-        )}
+    <div className="w-full max-w-[800px] divide-y-2">
+      <div className="flex flex-col gap-2 pb-5">
+        <p className="text-5xl">{assignment?.title}</p>
+        <p className="text-sm">
+          <span>{assignment?.creator}</span> •{" "}
+          <span>{assignment?.created_at}</span>
+        </p>
+        <p>{assignment?.points} points</p>
       </div>
-    </section>
+
+      <div className="py-5">
+        <p className="whitespace-pre-wrap">{assignment?.description}</p>
+      </div>
+
+      {role === "teacher" ? (
+        <TeacherView assignment_id={assignment_id} />
+      ) : (
+        <StudentView assignment_id={assignment_id} />
+      )}
+    </div>
   );
 }
 
@@ -167,7 +165,7 @@ function StudentView({ assignment_id }: ViewProps) {
           <p className="text-3xl">Your work</p>
           <div className="divide-y-2 divide-gray-50 rounded-lg bg-gray-200 p-5">
             <div className="flex items-center justify-between pb-2">
-              <p className="text-xs">{submission.submitted_at}</p>
+              <p className="text-xs">Submitted on {submission.submitted_at}</p>
               {submission.given_points ? (
                 <p className="text-xs">
                   Marked{" "}

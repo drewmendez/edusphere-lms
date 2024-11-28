@@ -15,10 +15,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { useCurrentUser } from "@/context/CurrentUserContext";
 import { useSignIn } from "@/services/authServices";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function SignInPage() {
   const { currentUser } = useCurrentUser();
   const { mutate: signIn } = useSignIn();
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -32,6 +34,7 @@ export default function SignInPage() {
   const onSignIn = (data: SignInForm) => {
     signIn(data, {
       onSuccess: (response) => {
+        queryClient.invalidateQueries({ queryKey: ["current-user"] });
         toast(response.message);
       },
       onError: (error) => {

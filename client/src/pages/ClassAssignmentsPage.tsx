@@ -59,17 +59,17 @@ function AssignmentCard({
 }: AssignmentCardProps) {
   return (
     <div className="flex items-center justify-between rounded-lg border px-5 py-3 shadow">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-4">
         <div
           className="rounded-full p-2 text-white"
           style={{ background: accentColor }}
         >
           <ClipboardList />
         </div>
-        <p>{title}</p>
+        <p className="font-semibold">{title}</p>
       </div>
       <div className="flex items-center gap-4">
-        <p className="text-xs">{created_at}</p>
+        <p className="text-xs">Posted on {created_at}</p>
         {role === "teacher" && (
           <AssignmentDropdown
             assignment_id={assignment_id}

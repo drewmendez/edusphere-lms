@@ -2,12 +2,31 @@ import {
   createAssignment,
   deleteAssignment,
   getAssignment,
+  getAssignments,
   getAssignmentsInClass,
   getSubmission,
   getSubmissions,
   submitAnswer,
   submitGrade,
 } from "./assignments.services.js";
+
+export const handleGetAssignments = async (req, res) => {
+  const filter = req.query.filter;
+  const status = req.query.status;
+
+  try {
+    const user_id = parseInt(req.params.user_id);
+
+    const assignments = await getAssignments(user_id, filter, status);
+
+    return res.status(200).send(assignments);
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Server error " + error.message,
+    });
+  }
+};
 
 export const handleGetAssignmentsInClass = async (req, res) => {
   try {

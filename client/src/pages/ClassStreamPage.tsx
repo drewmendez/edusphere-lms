@@ -143,7 +143,7 @@ function AssignmentFeed({
   return (
     <Link to={`/dashboard/assignments/${class_id}/${id}`}>
       <div className="flex items-center justify-between rounded-lg border px-5 py-3 shadow">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           <div
             className="rounded-full p-2 text-white"
             style={{ background: accentColor }}

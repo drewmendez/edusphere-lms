@@ -1,6 +1,89 @@
 import pool from "../../config/db.config.js";
 import { formatDate } from "../../utils/helpers.js";
 
+export const getAssignments = async (user_id, filter, status) => {
+  let query;
+  let values;
+
+  const queryForDoneAll = `
+    SELECT a.assignment_id, a.title, c.class_id, c.class_subject, c.class_section, c.banner_color, a.created_at, ac.submitted_at, a.points, ac.given_points
+    FROM assignments a
+    LEFT JOIN assignment_completions ac ON a.assignment_id = ac.assignment_id AND ac.student_id = ?
+    JOIN classes c ON a.class_id = c.class_id
+    JOIN enrollments e ON c.class_id = e.class_id
+    JOIN users u ON e.student_id = u.user_id
+    WHERE e.student_id = ? AND ac.answer IS NOT NULL
+    ORDER BY ac.submitted_at DESC
+  `;
+
+  const queryForDonePerClass = `
+    SELECT a.assignment_id, a.title, c.class_id, c.class_subject, c.class_section, c.banner_color, a.created_at, ac.submitted_at, a.points, ac.given_points
+    FROM assignments a
+    LEFT JOIN assignment_completions ac ON a.assignment_id = ac.assignment_id AND ac.student_id = ?
+    JOIN classes c ON a.class_id = c.class_id
+    JOIN enrollments e ON c.class_id = e.class_id
+    JOIN users u ON e.student_id = u.user_id
+    WHERE e.student_id = ? AND ac.answer IS NOT NULL AND c.class_id = ?
+    ORDER BY ac.submitted_at DESC
+  `;
+
+  const queryForAssignedAll = `
+    SELECT a.assignment_id, a.title, c.class_id, c.class_subject, c.class_section, c.banner_color, a.created_at
+    FROM assignments a
+    LEFT JOIN assignment_completions ac ON a.assignment_id = ac.assignment_id AND ac.student_id = ?
+    JOIN classes c ON a.class_id = c.class_id
+    JOIN enrollments e ON c.class_id = e.class_id
+    JOIN users u ON e.student_id = u.user_id
+    WHERE e.student_id = ? AND ac.answer IS NULL
+  `;
+
+  const queryForAssignedPerClass = `
+    SELECT a.assignment_id, a.title, c.class_id, c.class_subject, c.class_section, c.banner_color, a.created_at
+    FROM assignments a
+    LEFT JOIN assignment_completions ac ON a.assignment_id = ac.assignment_id AND ac.student_id = ?
+    JOIN classes c ON a.class_id = c.class_id
+    JOIN enrollments e ON c.class_id = e.class_id
+    JOIN users u ON e.student_id = u.user_id
+    WHERE e.student_id = ? AND ac.answer IS NULL AND c.class_id = ?
+  `;
+
+  const valuesForFilterAll = [user_id, user_id];
+  const valuesForPerClass = [user_id, user_id, parseInt(filter)];
+
+  if (status === "assigned") {
+    if (filter === "all") {
+      query = queryForAssignedAll;
+      values = valuesForFilterAll;
+    } else {
+      query = queryForAssignedPerClass;
+      values = valuesForPerClass;
+    }
+  } else {
+    if (filter === "all") {
+      query = queryForDoneAll;
+      values = valuesForFilterAll;
+    } else {
+      query = queryForDonePerClass;
+      values = valuesForPerClass;
+    }
+  }
+
+  try {
+    const [rows] = await pool.query(query, values);
+
+    const assignments = rows.map((row) => ({
+      ...row,
+      created_at: formatDate(row.created_at),
+      submitted_at: row.submitted_at ? formatDate(row.submitted_at) : null,
+    }));
+
+    return assignments;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Database error");
+  }
+};
+
 export const getAssignmentsInClass = async (class_id) => {
   const query = `
     SELECT assignment_id, title, created_at

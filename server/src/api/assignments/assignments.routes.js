@@ -4,6 +4,7 @@ import {
   handleCreateAssignment,
   handleDeleteAssignment,
   handleGetAssignment,
+  handleGetAssignments,
   handleGetAssignmentsInClass,
   handleGetSubmission,
   handleGetSubmissions,
@@ -13,6 +14,7 @@ import {
 
 const router = express.Router();
 
+router.get("/user/:user_id", verifyAuthCookie, handleGetAssignments);
 router.get("/class/:class_id", verifyAuthCookie, handleGetAssignmentsInClass);
 router.get("/:assignment_id", verifyAuthCookie, handleGetAssignment);
 router.get(

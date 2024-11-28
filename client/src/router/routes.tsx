@@ -2,14 +2,17 @@ import HomePage from "@/pages/HomePage";
 import SignInPage from "@/pages/SignInPage";
 import SignUpPage from "@/pages/SignUpPage";
 import { createBrowserRouter } from "react-router-dom";
-import ProtectedRoutes from "./ProtectedRoutes";
+import ProtectedRouteLayout from "../layouts/ProtectedRouteLayout";
 import DashboardPage from "@/pages/DashboardPage";
 import ToReviewPage from "@/pages/ToReviewPage";
 import ClassStreamPage from "@/pages/ClassStreamPage";
-import ClassPageLayout from "@/pages/ClassPageLayout";
+import ClassPageLayout from "@/layouts/ClassPageLayout";
 import ClassPeoplePage from "@/pages/ClassPeoplePage";
 import ClassAssignmentsPage from "@/pages/ClassAssignmentsPage";
 import AssignmentPage from "@/pages/AssignmentPage";
+import AssignedPage from "@/pages/AssignedPage";
+import ToDoPageLayout from "@/layouts/ToDoPageLayout";
+import DonePage from "@/pages/DonePage";
 
 export const router = createBrowserRouter(
   [
@@ -26,7 +29,7 @@ export const router = createBrowserRouter(
       element: <SignInPage />,
     },
     {
-      element: <ProtectedRoutes />,
+      element: <ProtectedRouteLayout />,
       children: [
         {
           path: "/dashboard",
@@ -53,10 +56,22 @@ export const router = createBrowserRouter(
             },
           ],
         },
-
         {
           path: "/to-review",
           element: <ToReviewPage />,
+        },
+        {
+          element: <ToDoPageLayout />,
+          children: [
+            {
+              path: "/to-do/assigned/:filter",
+              element: <AssignedPage />,
+            },
+            {
+              path: "/to-do/done/:filter",
+              element: <DonePage />,
+            },
+          ],
         },
       ],
     },

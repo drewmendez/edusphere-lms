@@ -59,10 +59,16 @@ export type AnnouncementData = {
 export type Assignment = {
   assignment_id: number;
   title: string;
-  description: string;
-  points: number;
+  description?: string;
+  points?: number;
   created_at: string;
-  creator: string;
+  creator?: string;
+  class_subject?: string;
+  class_section?: string;
+  banner_color?: string;
+  class_id?: number;
+  submitted_at?: string | null;
+  given_points?: number | null;
 };
 
 export type ApiResponse = {
