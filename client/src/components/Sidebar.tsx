@@ -4,6 +4,7 @@ import {
   GraduationCap,
   Home,
   ListTodo,
+  User,
   UserRoundPen,
 } from "lucide-react";
 import { Link, useLocation, useParams } from "react-router-dom";
@@ -62,7 +63,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
 
   return (
     <aside
-      className={`fixed inset-y-0 left-0 z-10 mt-[68px] overflow-hidden overflow-y-auto py-5 shadow transition-all ${isOpen ? "w-[310px]" : "w-[82px]"}`}
+      className={`fixed inset-y-0 left-0 z-10 mt-[68px] overflow-hidden overflow-y-auto pt-5 shadow transition-all ${isOpen ? "w-[310px]" : "w-[82px]"}`}
     >
       <nav className="flex h-full flex-col justify-between">
         <div>
@@ -121,7 +122,16 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
               ))}
           </div>
         </div>
-        <div className="mt-2 flex flex-col border-t-2 pt-2">
+        <div className="mt-2 flex flex-col gap-2 border-t-2 py-4">
+          <div className="flex items-center gap-5 pl-6">
+            <div className="w-min rounded-full bg-gray-300 p-2">
+              <User />
+            </div>
+            <div className="flex-shrink-0">
+              <p className="text-sm capitalize">{role}</p>
+              <p className="font-semibold">{currentUser?.user}</p>
+            </div>
+          </div>
           <SignOutDialog />
         </div>
       </nav>
