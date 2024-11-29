@@ -4,6 +4,7 @@ import {
   getAssignment,
   getAssignments,
   getAssignmentsInClass,
+  getAssignmentSubmissionData,
   getSubmission,
   getSubmissions,
   submitAnswer,
@@ -13,13 +14,33 @@ import {
 export const handleGetAssignments = async (req, res) => {
   const filter = req.query.filter;
   const status = req.query.status;
+  const role = req.user.role;
 
   try {
     const user_id = parseInt(req.params.user_id);
 
-    const assignments = await getAssignments(user_id, filter, status);
+    const assignments = await getAssignments(user_id, role, filter, status);
 
     return res.status(200).send(assignments);
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Server error " + error.message,
+    });
+  }
+};
+
+export const handleGetAssignmentSubmissionData = async (req, res) => {
+  try {
+    const assignment_id = parseInt(req.params.assignment_id);
+    const class_id = parseInt(req.params.class_id);
+
+    const assignmentSubmissionData = await getAssignmentSubmissionData(
+      assignment_id,
+      class_id
+    );
+
+    return res.status(200).send(assignmentSubmissionData);
   } catch (error) {
     return res.status(500).json({
       success: false,

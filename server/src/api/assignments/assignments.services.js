@@ -1,9 +1,26 @@
 import pool from "../../config/db.config.js";
 import { formatDate } from "../../utils/helpers.js";
 
-export const getAssignments = async (user_id, filter, status) => {
+export const getAssignments = async (user_id, role, filter, status) => {
   let query;
   let values;
+
+  const queryForToReviewAll = `
+    SELECT a.assignment_id, a.title, c.class_subject, c.class_id, c.class_section, c.banner_color, a.created_at
+    FROM assignments a
+    JOIN classes c ON a.class_id = c.class_id
+    WHERE a.creator_id = ?
+  `;
+  const valuesForToReviewAll = [user_id];
+
+  const queryForToReviewPerClass = `
+    SELECT a.assignment_id, a.title, c.class_subject, c.class_id, c.class_section, c.banner_color, a.created_at
+    FROM assignments a
+    JOIN classes c ON a.class_id = c.class_id
+    WHERE a.creator_id = ? AND a.class_id = ?
+  `;
+
+  const valuesForToReviewPerClass = [user_id, parseInt(filter)];
 
   const queryForDoneAll = `
     SELECT a.assignment_id, a.title, c.class_id, c.class_subject, c.class_section, c.banner_color, a.created_at, ac.submitted_at, a.points, ac.given_points
@@ -50,21 +67,31 @@ export const getAssignments = async (user_id, filter, status) => {
   const valuesForFilterAll = [user_id, user_id];
   const valuesForPerClass = [user_id, user_id, parseInt(filter)];
 
-  if (status === "assigned") {
+  if (role === "teacher") {
     if (filter === "all") {
-      query = queryForAssignedAll;
-      values = valuesForFilterAll;
+      query = queryForToReviewAll;
+      values = valuesForToReviewAll;
     } else {
-      query = queryForAssignedPerClass;
-      values = valuesForPerClass;
+      query = queryForToReviewPerClass;
+      values = valuesForToReviewPerClass;
     }
   } else {
-    if (filter === "all") {
-      query = queryForDoneAll;
-      values = valuesForFilterAll;
+    if (status === "assigned") {
+      if (filter === "all") {
+        query = queryForAssignedAll;
+        values = valuesForFilterAll;
+      } else {
+        query = queryForAssignedPerClass;
+        values = valuesForPerClass;
+      }
     } else {
-      query = queryForDonePerClass;
-      values = valuesForPerClass;
+      if (filter === "all") {
+        query = queryForDoneAll;
+        values = valuesForFilterAll;
+      } else {
+        query = queryForDonePerClass;
+        values = valuesForPerClass;
+      }
     }
   }
 
@@ -78,6 +105,53 @@ export const getAssignments = async (user_id, filter, status) => {
     }));
 
     return assignments;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Database error");
+  }
+};
+
+export const getAssignmentSubmissionData = async (assignment_id, class_id) => {
+  const query = `
+    SELECT u.user_id, ac.submitted_at, ac.given_points
+    FROM enrollments e
+    JOIN users u ON e.student_id = u.user_id
+    LEFT JOIN assignment_completions ac ON e.student_id = ac.student_id AND ac.assignment_id = ?
+    JOIN assignments a ON a.assignment_id = ? AND a.class_id = e.class_id
+    WHERE e.class_id = ?
+  `;
+  const values = [assignment_id, assignment_id, class_id];
+
+  try {
+    const [rows] = await pool.query(query, values);
+
+    const assignmentSubmissionData = rows.reduce(
+      (prev, row) => {
+        if (row.given_points) {
+          return {
+            ...prev,
+            marked: prev.marked + 1,
+          };
+        } else if (row.submitted_at) {
+          return {
+            ...prev,
+            handedIn: prev.handedIn + 1,
+          };
+        } else {
+          return {
+            ...prev,
+            assigned: prev.assigned + 1,
+          };
+        }
+      },
+      {
+        marked: 0,
+        handedIn: 0,
+        assigned: 0,
+      }
+    );
+
+    return assignmentSubmissionData;
   } catch (error) {
     console.error(error);
     throw new Error("Database error");

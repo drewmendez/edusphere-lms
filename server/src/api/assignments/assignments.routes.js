@@ -6,6 +6,7 @@ import {
   handleGetAssignment,
   handleGetAssignments,
   handleGetAssignmentsInClass,
+  handleGetAssignmentSubmissionData,
   handleGetSubmission,
   handleGetSubmissions,
   handleSubmitAnswer,
@@ -17,6 +18,11 @@ const router = express.Router();
 router.get("/user/:user_id", verifyAuthCookie, handleGetAssignments);
 router.get("/class/:class_id", verifyAuthCookie, handleGetAssignmentsInClass);
 router.get("/:assignment_id", verifyAuthCookie, handleGetAssignment);
+router.get(
+  "/:assignment_id/:class_id/submission-data",
+  verifyAuthCookie,
+  handleGetAssignmentSubmissionData
+);
 router.get(
   "/submissions/:assignment_id/:class_id",
   verifyAuthCookie,

@@ -33,7 +33,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
       },
       {
         icon: <Folder />,
-        link: "/to-review",
+        link: "/to-review/not-reviewed/all",
         text: "To Review",
       },
     ],

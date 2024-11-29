@@ -65,13 +65,16 @@ function TeacherView({ assignment_id }: ViewProps) {
         <div className="pr-4">
           <p className="text-4xl">
             {
-              submissions?.filter((submission) => submission.answer !== null)
-                .length
+              submissions?.filter(
+                (submission) =>
+                  submission.answer !== null &&
+                  submission.given_points === null,
+              ).length
             }
           </p>
           <p className="text-sm">Handed in</p>
         </div>
-        <div className="pl-4">
+        <div className="pl-4 pr-4">
           <p className="text-4xl">
             {
               submissions?.filter((submission) => submission.answer === null)
@@ -79,6 +82,16 @@ function TeacherView({ assignment_id }: ViewProps) {
             }
           </p>
           <p className="text-sm">Assigned</p>
+        </div>
+        <div className="pl-4">
+          <p className="text-4xl">
+            {
+              submissions?.filter(
+                (submission) => submission.given_points !== null,
+              ).length
+            }
+          </p>
+          <p className="text-sm">Marked</p>
         </div>
       </div>
 

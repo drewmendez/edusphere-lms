@@ -111,3 +111,9 @@ export type Submission = {
   points: number;
   given_points: number | null;
 };
+
+export type AssignmentSubmissionData = {
+  marked: number;
+  handedIn: number;
+  assigned: number;
+};
