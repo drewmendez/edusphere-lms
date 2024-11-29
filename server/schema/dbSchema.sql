@@ -30,13 +30,30 @@ CREATE TABLE assignments (
   title VARCHAR(50),
   description VARCHAR(255),
   class_id INT,
-  FOREIGN KEY (class_id) REFERENCES classes(class_id)
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  creator_id INT,
+  points INT,
+  FOREIGN KEY (creator_id) REFERENCES users(user_id),
+  FOREIGN KEY (class_id) REFERENCES classes(class_id) ON DELETE CASCADE
 );
 
 CREATE TABLE assignment_completions (
   assignment_completion_id INT PRIMARY KEY AUTO_INCREMENT,
   assignment_id INT,
   student_id INT,
-  FOREIGN KEY (assignment_id) REFERENCES assignments(assignment_id),
+  answer TEXT,
+  submitted_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  given_points INT,
+  FOREIGN KEY (assignment_id) REFERENCES assignments(assignment_id) ON DELETE CASCADE,
   FOREIGN KEY (student_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE announcements (
+	announcement_id INT PRIMARY KEY AUTO_INCREMENT,
+  class_id INT,
+  announcer_id INT,
+  announcement TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (class_id) REFERENCES classes(class_id) ON DELETE CASCADE,
+  FOREIGN KEY (announcer_id) REFERENCES users(user_id)
 );
