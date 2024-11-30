@@ -16,7 +16,6 @@ interface AddPointsProps {
 }
 
 export default function AddPoints({
-  refetchSubmissions,
   assignment_completion_id,
   points,
 }: AddPointsProps) {
@@ -32,7 +31,6 @@ export default function AddPoints({
       { given_points: grade },
       {
         onSuccess: (response) => {
-          refetchSubmissions();
           toast(response.message);
           setIsOpen(false);
         },

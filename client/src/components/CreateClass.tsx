@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import FormField from "./FormField";
-import { useCreateClass, useGetClasses } from "@/services/classesServices";
+import { useCreateClass } from "@/services/classesServices";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useCurrentUser } from "@/context/CurrentUserContext";
@@ -33,7 +33,6 @@ export default function CreateClass() {
   });
 
   const { mutate: createClass } = useCreateClass();
-  const { refetch: refetchClasses } = useGetClasses();
 
   const onCreateClass = (classForm: ClassForm) => {
     const classData = { ...classForm, teacher_id: teacher_id! };
@@ -42,7 +41,6 @@ export default function CreateClass() {
       onSuccess: (response) => {
         setIsOpen(false);
         toast(response.message);
-        refetchClasses();
       },
     });
   };

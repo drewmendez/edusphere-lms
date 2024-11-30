@@ -14,17 +14,14 @@ import { LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useSignOut } from "@/services/authServices";
-import { useQueryClient } from "@tanstack/react-query";
 
 export default function SignOutDialog() {
   const { mutate: signOut } = useSignOut();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   const handleSignOut = () => {
     signOut(undefined, {
-      onSuccess: async (response) => {
-        await queryClient.invalidateQueries({ queryKey: ["current-user"] });
+      onSuccess: (response) => {
         navigate("/", { replace: true });
         toast(response.message);
       },

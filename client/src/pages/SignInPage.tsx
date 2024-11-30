@@ -7,7 +7,7 @@ import {
 import Logo from "../assets/logo.png";
 import FormField from "@/components/FormField";
 import { Button } from "@/components/ui/button";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { SignInForm, SignInFormSchema } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,12 +15,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { useCurrentUser } from "@/context/CurrentUserContext";
 import { useSignIn } from "@/services/authServices";
-import { useQueryClient } from "@tanstack/react-query";
 
 export default function SignInPage() {
   const { currentUser } = useCurrentUser();
   const { mutate: signIn } = useSignIn();
-  const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -34,7 +33,7 @@ export default function SignInPage() {
   const onSignIn = (data: SignInForm) => {
     signIn(data, {
       onSuccess: (response) => {
-        queryClient.invalidateQueries({ queryKey: ["current-user"] });
+        navigate("/dashboard", { replace: true });
         toast(response.message);
       },
       onError: (error) => {

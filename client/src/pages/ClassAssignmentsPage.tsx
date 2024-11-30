@@ -46,7 +46,6 @@ export default function ClassAssignmentsPage() {
 type AssignmentCardProps = Assignment & {
   role: "teacher" | "student";
   accentColor: string;
-  class_id: number;
 };
 
 function AssignmentCard({
@@ -55,7 +54,6 @@ function AssignmentCard({
   title,
   created_at,
   accentColor,
-  class_id,
 }: AssignmentCardProps) {
   return (
     <div className="flex items-center justify-between rounded-lg border px-5 py-3 shadow">
@@ -71,10 +69,7 @@ function AssignmentCard({
       <div className="flex items-center gap-4">
         <p className="text-xs">Posted on {created_at}</p>
         {role === "teacher" && (
-          <AssignmentDropdown
-            assignment_id={assignment_id}
-            class_id={class_id}
-          />
+          <AssignmentDropdown assignment_id={assignment_id} />
         )}
       </div>
     </div>

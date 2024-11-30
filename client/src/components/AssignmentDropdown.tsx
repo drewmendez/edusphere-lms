@@ -5,23 +5,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import {
-  useDeleteAssignment,
-  useGetAssignmentsInClass,
-} from "@/services/assignmentsServices";
+import { useDeleteAssignment } from "@/services/assignmentsServices";
 import { toast } from "sonner";
 
 interface AssignmentDropdownProps {
   assignment_id: number;
-  class_id: number;
 }
 
 export default function AssignmentDropdown({
   assignment_id,
-  class_id,
 }: AssignmentDropdownProps) {
   const { mutate: deleteAssignment } = useDeleteAssignment();
-  const { refetch: refetchAssignments } = useGetAssignmentsInClass(class_id);
 
   const handleDeleteAssignment = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -31,7 +25,6 @@ export default function AssignmentDropdown({
     deleteAssignment(assignment_id, {
       onSuccess: (response) => {
         toast(response.message);
-        refetchAssignments();
       },
     });
   };

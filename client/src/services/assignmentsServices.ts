@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "./apiClient";
 import {
   ApiResponse,
@@ -43,7 +43,7 @@ export const useGetAssignmentSubmissionData = (
 
 export const useGetAssignmentsInClass = (class_id: number) => {
   return useQuery<Assignment[]>({
-    queryKey: ["assignments_in_class", class_id],
+    queryKey: ["assignments-in-class", class_id],
     queryFn: async () => {
       const { data } = await apiClient.get(`/assignments/class/${class_id}`);
       return data;
@@ -62,19 +62,29 @@ export const useGetAssignment = (assignment_id: number) => {
 };
 
 export const useCreateAssignment = () => {
+  const queryClient = useQueryClient();
+
   return useMutation<ApiResponse, AxiosError<ApiResponse>, AssignmentData>({
     mutationFn: async (assignmentData) => {
       const { data } = await apiClient.post("/assignments", assignmentData);
       return data;
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["assignments-in-class"] });
+    },
   });
 };
 
 export const useDeleteAssignment = () => {
+  const queryClient = useQueryClient();
+
   return useMutation<ApiResponse, AxiosError<ApiResponse>, number>({
     mutationFn: async (assignment_id) => {
       const { data } = await apiClient.delete(`/assignments/${assignment_id}`);
       return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["assignments-in-class"] });
     },
   });
 };
@@ -104,6 +114,8 @@ export const useGetSubmission = (student_id: number, assignment_id: number) => {
 };
 
 export const useSubmitAnswer = () => {
+  const queryClient = useQueryClient();
+
   return useMutation<ApiResponse, AxiosError<ApiResponse>, SubmissionData>({
     mutationFn: async (submissionData) => {
       const { data } = await apiClient.post(
@@ -112,10 +124,15 @@ export const useSubmitAnswer = () => {
       );
       return data;
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["submission"] });
+    },
   });
 };
 
 export const useSubmitGrade = (assignment_completion_id: number) => {
+  const queryClient = useQueryClient();
+
   return useMutation<
     ApiResponse,
     AxiosError<ApiResponse>,
@@ -127,6 +144,9 @@ export const useSubmitGrade = (assignment_completion_id: number) => {
         pointsData,
       );
       return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["submissions"] });
     },
   });
 };

@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "./apiClient";
 import { ApiResponse, Class, ClassData, User } from "@/types/types";
 import { AxiosError } from "axios";
@@ -38,28 +38,43 @@ export const useGetPeopleInClass = (class_id: number) => {
 };
 
 export const useCreateClass = () => {
+  const queryClient = useQueryClient();
+
   return useMutation<ApiResponse, AxiosError<ApiResponse>, ClassData>({
     mutationFn: async (classData) => {
       const { data } = await apiClient.post("/classes", classData);
       return data;
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["classes"] });
+    },
   });
 };
 
 export const useDeleteClass = () => {
+  const queryClient = useQueryClient();
+
   return useMutation<ApiResponse, AxiosError<ApiResponse>, number>({
     mutationFn: async (class_id) => {
       const { data } = await apiClient.delete(`/classes/${class_id}`);
       return data;
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["classes"] });
+    },
   });
 };
 
 export const useEditClass = (class_id: number) => {
+  const queryClient = useQueryClient();
+
   return useMutation<ApiResponse, AxiosError<ApiResponse>, ClassData>({
     mutationFn: async (classData) => {
       const { data } = await apiClient.put(`/classes/${class_id}`, classData);
       return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["classes"] });
     },
   });
 };

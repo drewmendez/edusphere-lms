@@ -23,8 +23,7 @@ export default function ClassStreamPage() {
   const announcer_id = currentUser?.user_id;
 
   const { data: classData } = useGetClass(class_id);
-  const { data: classFeeds, refetch: refetchClassFeeds } =
-    useGetClassFeeds(class_id);
+  const { data: classFeeds } = useGetClassFeeds(class_id);
   const { mutate: createAnnouncement } = useCreateAnnouncement();
 
   const onPostAnnouncement = (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,7 +39,6 @@ export default function ClassStreamPage() {
         setIsOpen(false);
         setAnnouncement("");
         toast(data.message);
-        refetchClassFeeds();
       },
     });
   };

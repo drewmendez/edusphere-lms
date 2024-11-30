@@ -146,10 +146,7 @@ function StudentView({ assignment_id }: ViewProps) {
   const { currentUser } = useCurrentUser();
   const student_id = currentUser?.user_id;
 
-  const { data: submission, refetch: refetchSubmission } = useGetSubmission(
-    student_id!,
-    assignment_id,
-  );
+  const { data: submission } = useGetSubmission(student_id!, assignment_id);
 
   const { mutate: submitAnswer } = useSubmitAnswer();
 
@@ -165,7 +162,6 @@ function StudentView({ assignment_id }: ViewProps) {
     submitAnswer(assignmentData, {
       onSuccess: (response) => {
         toast(response.message);
-        refetchSubmission();
         setAnswer("");
       },
     });
