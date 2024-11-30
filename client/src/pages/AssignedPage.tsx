@@ -43,7 +43,7 @@ function AssignmentCard({
 }: AssignmentCardProps) {
   return (
     <Link
-      to={`/dashboard/assignments/${class_id}/${assignment_id}`}
+      to={`/class/assignments/${class_id}/${assignment_id}`}
       className="block"
     >
       <div className="flex items-center justify-between rounded-lg border px-5 py-3 shadow">

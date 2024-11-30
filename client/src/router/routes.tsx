@@ -41,19 +41,19 @@ export const router = createBrowserRouter(
           element: <ClassPageLayout />,
           children: [
             {
-              path: "/dashboard/stream/:class_id",
+              path: "/class/stream/:class_id",
               element: <ClassStreamPage />,
             },
             {
-              path: "/dashboard/assignments/:class_id",
+              path: "/class/assignments/:class_id",
               element: <ClassAssignmentsPage />,
             },
             {
-              path: "/dashboard/assignments/:class_id/:assignment_id",
+              path: "/class/assignments/:class_id/:assignment_id",
               element: <AssignmentPage />,
             },
             {
-              path: "/dashboard/people/:class_id",
+              path: "/class/people/:class_id",
               element: <ClassPeoplePage />,
             },
           ],

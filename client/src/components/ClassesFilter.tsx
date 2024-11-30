@@ -24,7 +24,10 @@ export default function ClassesFilter({
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [filter, setFilter] = useState({ id: -1, subject: "All classes" });
+  const [filter, setFilter] = useState<{
+    id: number | string;
+    subject: string;
+  }>({ id: "all", subject: "All classes" });
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
@@ -36,10 +39,9 @@ export default function ClassesFilter({
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem
-          textValue="All classes"
           className={`flex w-[350px] cursor-pointer justify-between text-lg ${filter.subject === "All classes" && "bg-blue-100"}`}
           onClick={() => {
-            setFilter({ id: -1, subject: "All classes" });
+            setFilter({ id: "all", subject: "All classes" });
             navigate(`/${path}/${status}/all`);
             refetchAssignments();
           }}

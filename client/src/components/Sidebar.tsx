@@ -70,7 +70,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
           <div className="flex flex-col">
             {sidebarNavs[role!].map((item, index) => (
               <Link
-                className={`mr-3 flex items-center gap-7 overflow-hidden rounded-br-full rounded-tr-full py-3 pl-8 transition hover:bg-slate-200 ${pathname === item.link && "bg-blue-100"}`}
+                className={`mr-3 flex items-center gap-7 overflow-hidden rounded-br-full rounded-tr-full py-3 pl-8 transition hover:bg-slate-200 ${pathname.includes(item.link) && "bg-blue-100"}`}
                 to={item.link}
                 key={index}
               >
@@ -103,8 +103,8 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
               classes?.map((item) => (
                 <Link
                   key={item.class_id}
-                  className={`mr-3 flex items-center gap-7 overflow-hidden rounded-br-full rounded-tr-full py-2 pl-7 text-sm transition hover:bg-slate-200 ${Number(params.class_id!) === item.class_id && pathname.includes("dashboard") && "bg-blue-100"}`}
-                  to={`dashboard/stream/${item.class_id}`}
+                  className={`mr-3 flex items-center gap-7 overflow-hidden rounded-br-full rounded-tr-full py-2 pl-7 text-sm transition hover:bg-slate-200 ${Number(params.class_id!) === item.class_id && pathname.includes("class") && "bg-blue-100"}`}
+                  to={`/class/stream/${item.class_id}`}
                 >
                   <div
                     className="flex size-8 items-center justify-center rounded-full font-semibold text-white"

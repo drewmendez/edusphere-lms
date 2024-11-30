@@ -28,7 +28,7 @@ export default function ClassAssignmentsPage() {
         {assignments?.map((assignment) => (
           <Link
             key={assignment.assignment_id}
-            to={`/dashboard/assignments/${class_id}/${assignment.assignment_id}`}
+            to={`/class/assignments/${class_id}/${assignment.assignment_id}`}
           >
             <AssignmentCard
               {...assignment}

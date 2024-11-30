@@ -36,7 +36,7 @@ function ClassCard({
         style={{ background: banner_color }}
       >
         <div className="space-y-1">
-          <Link to={`/dashboard/stream/${class_id}`}>
+          <Link to={`/class/stream/${class_id}`}>
             <p className="line-clamp-1 cursor-pointer text-2xl hover:underline">
               {class_subject}
             </p>
@@ -54,13 +54,13 @@ function ClassCard({
       <div className="flex justify-end gap-1 border-t-2 px-2 py-1">
         <Link
           className="rounded-full p-3 transition hover:bg-slate-200"
-          to={`/dashboard/assignments/${class_id}`}
+          to={`/class/assignments/${class_id}`}
         >
           <ClipboardList />
         </Link>
         <Link
           className="rounded-full p-3 transition hover:bg-slate-200"
-          to={`/dashboard/people/${class_id}`}
+          to={`/class/people/${class_id}`}
         >
           <Users />
         </Link>

@@ -4,15 +4,15 @@ import { Outlet, useParams } from "react-router-dom";
 const NAVLINKS = [
   {
     text: "Stream",
-    path: "/dashboard/stream/",
+    path: "/class/stream/",
   },
   {
     text: "Assignments",
-    path: "/dashboard/assignments/",
+    path: "/class/assignments/",
   },
   {
     text: "People",
-    path: "/dashboard/people/",
+    path: "/class/people/",
   },
 ];
 
