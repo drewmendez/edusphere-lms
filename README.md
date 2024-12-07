@@ -47,8 +47,8 @@ EduSphere is a web application designed to replicate the functionality and user 
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/drewmendez/edusphere-webapp.git
-   cd edusphere-webapp
+   git clone https://github.com/drewmendez/edusphere-lms.git
+   cd edusphere-lms
    ```
 
 2. **Install dependencies for frontend:**
@@ -75,7 +75,7 @@ EduSphere is a web application designed to replicate the functionality and user 
    - In the `server` folder, create a `.env` file with the following:
 
      ```env
-     PORT=yourserverport
+     PORT=8080
 
      MYSQL_HOST=localhost
      MYSQL_USER=root
