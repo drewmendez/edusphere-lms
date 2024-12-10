@@ -21,7 +21,7 @@ export default function JoinClass() {
   const [isOpen, setIsOpen] = useState(false);
   const { mutate: joinClass } = useJoinClass();
   const { currentUser } = useCurrentUser();
-  const student_id = currentUser?.user_id;
+  const student_id = currentUser.user_id;
 
   const {
     register,
@@ -34,7 +34,7 @@ export default function JoinClass() {
   });
 
   const onJoinClass = (enrollmentForm: EnrollmentForm) => {
-    const enrollmentData = { ...enrollmentForm, student_id: student_id! };
+    const enrollmentData = { ...enrollmentForm, student_id: student_id };
 
     joinClass(enrollmentData, {
       onSuccess: (response) => {

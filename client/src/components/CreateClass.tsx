@@ -21,7 +21,7 @@ export default function CreateClass() {
   const [isOpen, setIsOpen] = useState(false);
 
   const { currentUser } = useCurrentUser();
-  const teacher_id = currentUser?.user_id;
+  const teacher_id = currentUser.user_id;
 
   const {
     register,
@@ -35,7 +35,7 @@ export default function CreateClass() {
   const { mutate: createClass } = useCreateClass();
 
   const onCreateClass = (classForm: ClassForm) => {
-    const classData = { ...classForm, teacher_id: teacher_id! };
+    const classData = { ...classForm, teacher_id: teacher_id };
 
     createClass(classData, {
       onSuccess: (response) => {

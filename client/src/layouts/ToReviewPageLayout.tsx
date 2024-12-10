@@ -18,7 +18,7 @@ export default function ToReviewPageLayout() {
 
   const { currentUser } = useCurrentUser();
 
-  if (currentUser?.role !== "teacher") {
+  if (currentUser.role !== "teacher") {
     window.history.back();
   }
 

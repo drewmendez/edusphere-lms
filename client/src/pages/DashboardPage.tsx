@@ -42,7 +42,7 @@ function ClassCard({
             </p>
           </Link>
           <p className="text-sm">{class_section}</p>
-          {currentUser?.role === "student" && <p>{class_teacher}</p>}
+          {currentUser.role === "student" && <p>{class_teacher}</p>}
         </div>
         <ClassDropdown
           class_id={class_id}

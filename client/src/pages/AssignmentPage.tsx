@@ -15,7 +15,7 @@ import { toast } from "sonner";
 export default function AssignmentPage() {
   const { currentUser } = useCurrentUser();
 
-  const role = currentUser?.role;
+  const role = currentUser.role;
 
   const params = useParams();
   const assignment_id = parseInt(params.assignment_id!);
@@ -144,9 +144,9 @@ function TeacherView({ assignment_id }: ViewProps) {
 
 function StudentView({ assignment_id }: ViewProps) {
   const { currentUser } = useCurrentUser();
-  const student_id = currentUser?.user_id;
+  const student_id = currentUser.user_id;
 
-  const { data: submission } = useGetSubmission(student_id!, assignment_id);
+  const { data: submission } = useGetSubmission(student_id, assignment_id);
 
   const { mutate: submitAnswer } = useSubmitAnswer();
 

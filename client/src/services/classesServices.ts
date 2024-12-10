@@ -6,7 +6,7 @@ import { useCurrentUser } from "@/context/CurrentUserContext";
 
 export const useGetClasses = () => {
   const { currentUser } = useCurrentUser();
-  const user_id = currentUser?.user_id;
+  const user_id = currentUser.user_id;
 
   return useQuery<Class[]>({
     queryKey: ["classes", user_id],

@@ -4,8 +4,8 @@ import { useParams } from "react-router-dom";
 
 export default function ClassPeoplePage() {
   const { currentUser } = useCurrentUser();
-  const role = currentUser?.role;
-  const currentUserId = currentUser?.user_id;
+  const role = currentUser.role;
+  const currentUserId = currentUser.user_id;
 
   const { class_id } = useParams();
   const parsedClassId = parseInt(class_id!);

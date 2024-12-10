@@ -21,7 +21,7 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
   const { currentUser } = useCurrentUser();
-  const role = currentUser?.role;
+  const role = currentUser.role;
   const [isDropdownOpen, setIsDropdownOpen] = useState(true);
   const { data: classes } = useGetClasses();
 
@@ -68,7 +68,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
       <nav className="flex h-full flex-col justify-between">
         <div>
           <div className="flex flex-col">
-            {sidebarNavs[role!].map((item, index) => (
+            {sidebarNavs[role].map((item, index) => (
               <Link
                 className={`mr-3 flex items-center gap-7 overflow-hidden rounded-br-full rounded-tr-full py-3 pl-8 transition hover:bg-slate-200 ${pathname.includes(item.link) && "bg-blue-100"}`}
                 to={item.link}
@@ -129,7 +129,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
             </div>
             <div className="flex-shrink-0">
               <p className="text-sm capitalize">{role}</p>
-              <p className="font-semibold">{currentUser?.user}</p>
+              <p className="font-semibold">{currentUser.user}</p>
             </div>
           </div>
           <SignOutDialog />

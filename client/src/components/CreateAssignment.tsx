@@ -26,7 +26,7 @@ export default function CreateAssignment({ class_id }: CreateAssignmentProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const { currentUser } = useCurrentUser();
-  const creator_id = currentUser?.user_id;
+  const creator_id = currentUser.user_id;
   const {
     register,
     handleSubmit,
@@ -43,7 +43,7 @@ export default function CreateAssignment({ class_id }: CreateAssignmentProps) {
 
   const onCreateAssignment = (assignmentData: AssignmentForm) => {
     createAssignment(
-      { ...assignmentData, class_id, creator_id: creator_id! },
+      { ...assignmentData, class_id, creator_id: creator_id },
       {
         onSuccess: (response) => {
           setIsOpen(false);

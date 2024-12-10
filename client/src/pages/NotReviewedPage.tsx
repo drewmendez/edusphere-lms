@@ -14,7 +14,7 @@ export default function NotReviewedPage() {
   const filter = params.filter;
 
   const { data: assignments, refetch: refetchAssignments } = useGetAssignments(
-    currentUser?.user_id!,
+    currentUser.user_id,
     filter!,
   );
 

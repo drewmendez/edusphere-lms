@@ -3,7 +3,7 @@ import { User } from "@/types/types";
 import { createContext, ReactNode, useContext } from "react";
 
 interface CurrentUserContext {
-  currentUser: User | undefined;
+  currentUser: User;
 }
 
 const CurrentUserContext = createContext<CurrentUserContext | null>(null);
@@ -13,15 +13,21 @@ export default function CurrentUserContextProvider({
 }: {
   children: ReactNode;
 }) {
-  const { data: currentUser, isFetching: isFetchingCurrentUser } =
-    useGetCurrentUser();
+  const {
+    data: currentUser,
+    isPending,
+    isError,
+    isFetching,
+  } = useGetCurrentUser();
 
-  if (isFetchingCurrentUser)
+  if (isPending || isFetching)
     return (
       <p className="flex h-screen items-center justify-center">
         Authenticating...
       </p>
     );
+
+  if (isError) return;
 
   return (
     <CurrentUserContext.Provider value={{ currentUser }}>

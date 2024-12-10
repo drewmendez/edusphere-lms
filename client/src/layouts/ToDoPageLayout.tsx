@@ -18,7 +18,7 @@ export default function ToDoPageLayout() {
 
   const { currentUser } = useCurrentUser();
 
-  if (currentUser?.role !== "student") {
+  if (currentUser.role !== "student") {
     window.history.back();
   }
 

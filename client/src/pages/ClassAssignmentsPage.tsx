@@ -9,7 +9,7 @@ import { Link, useParams } from "react-router-dom";
 
 export default function ClassAssignmentsPage() {
   const { currentUser } = useCurrentUser();
-  const role = currentUser?.role;
+  const role = currentUser.role;
 
   const params = useParams();
   const class_id = parseInt(params.class_id!);
@@ -33,7 +33,7 @@ export default function ClassAssignmentsPage() {
             <AssignmentCard
               {...assignment}
               accentColor={classData?.banner_color!}
-              role={role!}
+              role={role}
               class_id={class_id}
             />
           </Link>

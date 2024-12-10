@@ -36,13 +36,13 @@ export default function ClassDropdown({
   class_section,
 }: ClassDropdownProps) {
   const { currentUser } = useCurrentUser();
-  const role = currentUser?.role;
-  const student_id = currentUser?.user_id;
+  const role = currentUser.role;
+  const student_id = currentUser.user_id;
 
   const [isOpen, setIsOpen] = useState(false);
   const { mutate: deleteClass } = useDeleteClass();
   const { mutate: updateClass } = useEditClass(class_id);
-  const { mutate: unenrollToClass } = useUnenrollToClass(student_id!);
+  const { mutate: unenrollToClass } = useUnenrollToClass(student_id);
 
   const {
     register,

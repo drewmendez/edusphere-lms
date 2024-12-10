@@ -19,8 +19,8 @@ export default function ClassStreamPage() {
   const class_id = parseInt(params.class_id!);
 
   const { currentUser } = useCurrentUser();
-  const role = currentUser?.role;
-  const announcer_id = currentUser?.user_id;
+  const role = currentUser.role;
+  const announcer_id = currentUser.user_id;
 
   const { data: classData } = useGetClass(class_id);
   const { data: classFeeds } = useGetClassFeeds(class_id);
@@ -32,7 +32,7 @@ export default function ClassStreamPage() {
     const announcementData = {
       class_id,
       announcement,
-      announcer_id: announcer_id!,
+      announcer_id: announcer_id,
     };
     createAnnouncement(announcementData, {
       onSuccess: (data) => {
