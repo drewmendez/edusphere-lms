@@ -13,18 +13,11 @@ export default function ReviewedPage() {
   const params = useParams();
   const filter = params.filter;
 
-  const { data: assignments, refetch: refetchAssignments } = useGetAssignments(
-    currentUser.user_id,
-    filter!,
-  );
+  const { data: assignments } = useGetAssignments(currentUser.user_id, filter!);
 
   return (
     <div className="w-full max-w-[800px] space-y-4">
-      <ClassesFilter
-        path="to-review"
-        status="reviewed"
-        refetchAssignments={refetchAssignments}
-      />
+      <ClassesFilter path="to-review" status="reviewed" />
       {assignments?.map((assignment) => (
         <AssignmentCard key={assignment.assignment_id} {...assignment} />
       ))}

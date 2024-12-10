@@ -12,14 +12,9 @@ import { useNavigate } from "react-router-dom";
 interface ClassesFilterProps {
   path: string;
   status: string;
-  refetchAssignments: () => void;
 }
 
-export default function ClassesFilter({
-  path,
-  status,
-  refetchAssignments,
-}: ClassesFilterProps) {
+export default function ClassesFilter({ path, status }: ClassesFilterProps) {
   const { data: classes } = useGetClasses();
   const navigate = useNavigate();
 
@@ -43,7 +38,6 @@ export default function ClassesFilter({
           onClick={() => {
             setFilter({ id: "all", subject: "All classes" });
             navigate(`/${path}/${status}/all`);
-            refetchAssignments();
           }}
         >
           All classes
@@ -55,7 +49,6 @@ export default function ClassesFilter({
             onClick={() => {
               setFilter({ id: item.class_id, subject: item.class_subject });
               navigate(`/${path}/${status}/${item.class_id}`);
-              refetchAssignments();
             }}
           >
             {item.class_subject}

@@ -10,7 +10,7 @@ export default function DonePage() {
   const params = useParams();
   const filter = params.filter;
 
-  const { data: assignments, refetch: refetchAssignments } = useGetAssignments(
+  const { data: assignments } = useGetAssignments(
     currentUser.user_id,
     filter!,
     "done",
@@ -18,11 +18,7 @@ export default function DonePage() {
 
   return (
     <div className="w-full max-w-[800px] space-y-4">
-      <ClassesFilter
-        path="to-do"
-        status="done"
-        refetchAssignments={refetchAssignments}
-      />
+      <ClassesFilter path="to-do" status="done" />
       {assignments?.map((assignment) => (
         <AssignmentCard key={assignment.assignment_id} {...assignment} />
       ))}
