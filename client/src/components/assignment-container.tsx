@@ -1,4 +1,4 @@
-import { useGetClass } from "@/services/classesServices";
+import { useGetClass } from "@/features/classes/queries/use-get-class";
 import { ClipboardList } from "lucide-react";
 import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";

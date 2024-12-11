@@ -9,11 +9,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { buttonVariants } from "./ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useSignOut } from "@/services/authServices";
+import { useSignOut } from "@/lib/auth";
 
 export default function SignOutDialog() {
   const { mutate: signOut } = useSignOut();

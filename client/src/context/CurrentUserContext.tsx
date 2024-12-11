@@ -1,4 +1,4 @@
-import { useGetCurrentUser } from "@/services/authServices";
+import { useGetCurrentUser } from "@/lib/auth";
 import { User } from "@/types/types";
 import { createContext, ReactNode, useContext } from "react";
 
