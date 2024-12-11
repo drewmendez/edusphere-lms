@@ -16,8 +16,8 @@ export default function Dropdown({ trigger, dropdownItems }: DropdownProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
       <DropdownMenuContent>
-        {dropdownItems.map((dropdownItem) => (
-          <DropdownMenuItem>{dropdownItem}</DropdownMenuItem>
+        {dropdownItems.map((dropdownItem, index) => (
+          <DropdownMenuItem key={index}>{dropdownItem}</DropdownMenuItem>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
