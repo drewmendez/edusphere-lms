@@ -1,19 +1,13 @@
-import { useCurrentUser } from "@/context/CurrentUserContext";
 import { useGetAssignments } from "@/services/assignmentsServices";
 import { useParams } from "react-router-dom";
 import AssignmentContainer from "./assignment-container";
 import { Assignment } from "@/types/types";
 
 export default function TodoAssignmentsList({ status }: { status: string }) {
-  const { currentUser } = useCurrentUser();
   const params = useParams();
   const filter = params.filter;
 
-  const { data: assignments } = useGetAssignments(
-    currentUser.user_id,
-    filter!,
-    status,
-  );
+  const { data: assignments } = useGetAssignments(filter!, status);
 
   return (
     <div className="flex flex-col gap-4">

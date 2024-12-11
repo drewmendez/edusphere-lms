@@ -1,4 +1,3 @@
-import { useCurrentUser } from "@/context/CurrentUserContext";
 import { useCreateAssignment } from "@/services/assignmentsServices";
 import { AssignmentForm, AssignmentFormSchema } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,8 +16,6 @@ export default function CreateAssignmentForm({
   class_id,
   setIsOpen,
 }: CreateAssignmentFormProps) {
-  const { currentUser } = useCurrentUser();
-  const creator_id = currentUser.user_id;
   const {
     register,
     handleSubmit,
@@ -34,7 +31,7 @@ export default function CreateAssignmentForm({
 
   const onCreateAssignment = (assignmentData: AssignmentForm) => {
     createAssignment(
-      { ...assignmentData, class_id, creator_id: creator_id },
+      { ...assignmentData, class_id },
       {
         onSuccess: (response) => {
           setIsOpen(false);

@@ -4,13 +4,10 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
-import { useCurrentUser } from "@/context/CurrentUserContext";
 
 export default function AnnouncementForm({ class_id }: { class_id: number }) {
   const [isOpen, setIsOpen] = useState(false);
   const [announcement, setAnnouncement] = useState("");
-
-  const { currentUser } = useCurrentUser();
 
   const { mutate: createAnnouncement } = useCreateAnnouncement();
 
@@ -20,7 +17,6 @@ export default function AnnouncementForm({ class_id }: { class_id: number }) {
     const announcementData = {
       class_id,
       announcement,
-      announcer_id: currentUser.user_id,
     };
     createAnnouncement(announcementData, {
       onSuccess: (data) => {

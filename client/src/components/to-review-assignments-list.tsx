@@ -1,4 +1,3 @@
-import { useCurrentUser } from "@/context/CurrentUserContext";
 import {
   useGetAssignments,
   useGetAssignmentSubmissionData,
@@ -8,11 +7,10 @@ import AssignmentContainer from "./assignment-container";
 import { Assignment } from "@/types/types";
 
 export default function ToReviewAssignmentsList() {
-  const { currentUser } = useCurrentUser();
   const params = useParams();
   const filter = params.filter;
 
-  const { data: assignments } = useGetAssignments(currentUser.user_id, filter!);
+  const { data: assignments } = useGetAssignments(filter!);
 
   return (
     <div className="flex flex-col gap-4">

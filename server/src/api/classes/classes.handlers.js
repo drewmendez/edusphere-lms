@@ -9,11 +9,9 @@ import {
 } from "./classes.services.js";
 
 export const handleGetClasses = async (req, res) => {
-  const role = req.user.role;
+  const { user_id, role } = req.user;
 
   try {
-    const user_id = parseInt(req.params.user_id);
-
     if (role === "teacher") {
       const classes = await getClassesForTeacherRole(user_id);
 
@@ -62,9 +60,10 @@ export const handleGetPeopleInClass = async (req, res) => {
 };
 
 export const handleCreateClass = async (req, res) => {
-  const { class_subject, class_section, teacher_id } = req.body;
+  const { class_subject, class_section } = req.body;
+  const teacher_id = req.user.user_id;
 
-  if (!class_subject || !class_section || !teacher_id) {
+  if (!class_subject || !class_section) {
     return res.status(400).json({
       success: false,
       message: "All fields are required",

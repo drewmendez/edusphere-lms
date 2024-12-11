@@ -10,16 +10,12 @@ import {
 } from "@/types/types";
 import { AxiosError } from "axios";
 
-export const useGetAssignments = (
-  user_id: number,
-  filter: string,
-  status?: string,
-) => {
+export const useGetAssignments = (filter: string, status?: string) => {
   return useQuery<Assignment[]>({
-    queryKey: ["assignments", user_id, filter, status],
+    queryKey: ["assignments", filter, status],
     queryFn: async () => {
       const { data } = await apiClient.get(
-        `/assignments/user/${user_id}?filter=${filter}&status=${status}`,
+        `/assignments?filter=${filter}&status=${status}`,
       );
       return data;
     },
@@ -101,12 +97,12 @@ export const useGetSubmissions = (assignment_id: number, class_id: number) => {
   });
 };
 
-export const useGetSubmission = (student_id: number, assignment_id: number) => {
+export const useGetSubmission = (assignment_id: number) => {
   return useQuery<Submission>({
-    queryKey: ["submission", student_id, assignment_id],
+    queryKey: ["submission", assignment_id],
     queryFn: async () => {
       const { data } = await apiClient.get(
-        `/assignments/submissions/student/${student_id}/${assignment_id}`,
+        `/assignments/submissions/${assignment_id}`,
       );
       return data;
     },

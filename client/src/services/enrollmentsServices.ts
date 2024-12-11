@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "./apiClient";
-import { ApiResponse, EnrollmentData } from "@/types/types";
+import { ApiResponse, EnrollmentForm } from "@/types/types";
 import { AxiosError } from "axios";
 
 export const useJoinClass = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<ApiResponse, AxiosError<ApiResponse>, EnrollmentData>({
+  return useMutation<ApiResponse, AxiosError<ApiResponse>, EnrollmentForm>({
     mutationFn: async (enrollmentData) => {
       const { data } = await apiClient.post("/enrollments", enrollmentData);
       return data;
@@ -17,14 +17,12 @@ export const useJoinClass = () => {
   });
 };
 
-export const useUnenrollToClass = (student_id: number) => {
+export const useUnenrollToClass = () => {
   const queryClient = useQueryClient();
 
   return useMutation<ApiResponse, AxiosError<ApiResponse>, number>({
     mutationFn: async (class_id) => {
-      const { data } = await apiClient.delete(
-        `/enrollments/${student_id}/${class_id}`,
-      );
+      const { data } = await apiClient.delete(`/enrollments/${class_id}`);
       return data;
     },
     onSuccess: () => {

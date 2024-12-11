@@ -14,11 +14,9 @@ import {
 export const handleGetAssignments = async (req, res) => {
   const filter = req.query.filter;
   const status = req.query.status;
-  const role = req.user.role;
+  const { user_id, role } = req.user;
 
   try {
-    const user_id = parseInt(req.params.user_id);
-
     const assignments = await getAssignments(user_id, role, filter, status);
 
     return res.status(200).send(assignments);
@@ -97,7 +95,7 @@ export const handleGetSubmissions = async (req, res) => {
 
 export const handleGetSubmission = async (req, res) => {
   try {
-    const student_id = parseInt(req.params.student_id);
+    const student_id = req.user.user_id;
     const assignment_id = parseInt(req.params.assignment_id);
 
     const submission = await getSubmission(student_id, assignment_id);
@@ -116,9 +114,10 @@ export const handleGetSubmission = async (req, res) => {
 };
 
 export const handleCreateAssignment = async (req, res) => {
-  const { title, description, points, class_id, creator_id } = req.body;
+  const { title, description, points, class_id } = req.body;
+  const creator_id = req.user.user_id;
 
-  if (!title || !description || !points || !class_id || !creator_id) {
+  if (!title || !description || !points || !class_id) {
     return res.status(400).json({
       success: false,
       message: "All fields are required",
@@ -141,9 +140,10 @@ export const handleCreateAssignment = async (req, res) => {
 };
 
 export const handleSubmitAnswer = async (req, res) => {
-  const { assignment_id, student_id, answer } = req.body;
+  const { assignment_id, answer } = req.body;
+  const student_id = req.user.user_id;
 
-  if (!assignment_id || !student_id || !answer) {
+  if (!assignment_id || !answer) {
     return res.status(400).json({
       success: false,
       message: "All fields are required",

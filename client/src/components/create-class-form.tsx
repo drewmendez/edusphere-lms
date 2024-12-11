@@ -6,7 +6,6 @@ import { Button } from "./ui/button";
 import FormField from "./form-field";
 import { ClassForm, ClassFormSchema } from "@/types/types";
 
-import { useCurrentUser } from "@/context/CurrentUserContext";
 import { useCreateClass } from "@/services/classesServices";
 
 interface CreateClassFormProps {
@@ -14,9 +13,6 @@ interface CreateClassFormProps {
 }
 
 export default function CreateClassForm({ setIsOpen }: CreateClassFormProps) {
-  const { currentUser } = useCurrentUser();
-  const teacher_id = currentUser.user_id;
-
   const {
     register,
     handleSubmit,
@@ -28,9 +24,7 @@ export default function CreateClassForm({ setIsOpen }: CreateClassFormProps) {
   const { mutate: createClass } = useCreateClass();
 
   const onCreateClass = (classForm: ClassForm) => {
-    const classData = { ...classForm, teacher_id: teacher_id };
-
-    createClass(classData, {
+    createClass(classForm, {
       onSuccess: (response) => {
         setIsOpen(false);
         toast(response.message);

@@ -9,10 +9,6 @@ const router = express.Router();
 
 router.post("/", verifyAuthCookie, handleEnrollToClass);
 
-router.delete(
-  "/:student_id/:class_id",
-  verifyAuthCookie,
-  handleUnenrollToClass
-);
+router.delete("/:class_id", verifyAuthCookie, handleUnenrollToClass);
 
 export { router as enrollmentsRoute };

@@ -126,10 +126,7 @@ function TeacherView({ assignment_id }: ViewProps) {
 }
 
 function StudentView({ assignment_id }: ViewProps) {
-  const { currentUser } = useCurrentUser();
-  const student_id = currentUser.user_id;
-
-  const { data: submission } = useGetSubmission(student_id, assignment_id);
+  const { data: submission } = useGetSubmission(assignment_id);
 
   const { mutate: submitAnswer } = useSubmitAnswer();
 
@@ -138,7 +135,6 @@ function StudentView({ assignment_id }: ViewProps) {
   const handleSubmitAnswer = () => {
     const assignmentData = {
       assignment_id: assignment_id,
-      student_id: student_id!,
       answer: answer,
     };
 

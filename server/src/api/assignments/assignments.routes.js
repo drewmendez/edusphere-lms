@@ -15,7 +15,7 @@ import {
 
 const router = express.Router();
 
-router.get("/user/:user_id", verifyAuthCookie, handleGetAssignments);
+router.get("/", verifyAuthCookie, handleGetAssignments);
 router.get("/class/:class_id", verifyAuthCookie, handleGetAssignmentsInClass);
 router.get("/:assignment_id", verifyAuthCookie, handleGetAssignment);
 router.get(
@@ -29,7 +29,7 @@ router.get(
   handleGetSubmissions
 );
 router.get(
-  "/submissions/student/:student_id/:assignment_id",
+  "/submissions/:assignment_id",
   verifyAuthCookie,
   handleGetSubmission
 );

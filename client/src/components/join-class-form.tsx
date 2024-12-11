@@ -5,7 +5,6 @@ import { toast } from "sonner";
 import { Button } from "./ui/button";
 import FormField from "./form-field";
 
-import { useCurrentUser } from "@/context/CurrentUserContext";
 import { EnrollmentForm, EnrollmentFormSchema } from "@/types/types";
 import { useJoinClass } from "@/services/enrollmentsServices";
 
@@ -15,8 +14,6 @@ interface JoinClassFormProps {
 
 export default function JoinClassForm({ setIsOpen }: JoinClassFormProps) {
   const { mutate: joinClass } = useJoinClass();
-  const { currentUser } = useCurrentUser();
-  const student_id = currentUser.user_id;
 
   const {
     register,
@@ -28,9 +25,7 @@ export default function JoinClassForm({ setIsOpen }: JoinClassFormProps) {
   });
 
   const onJoinClass = (enrollmentForm: EnrollmentForm) => {
-    const enrollmentData = { ...enrollmentForm, student_id: student_id };
-
-    joinClass(enrollmentData, {
+    joinClass(enrollmentForm, {
       onSuccess: (response) => {
         setIsOpen(false);
         toast(response.message);

@@ -4,9 +4,10 @@ import {
 } from "./announcements.services.js";
 
 export const handleCreateAnnouncement = async (req, res) => {
-  const { class_id, announcement, announcer_id } = req.body;
+  const { class_id, announcement } = req.body;
+  const announcer_id = req.user.user_id;
 
-  if (!class_id || !announcement || !announcer_id) {
+  if (!class_id || !announcement) {
     return res.status(400).json({
       success: false,
       message: "All fields are required",

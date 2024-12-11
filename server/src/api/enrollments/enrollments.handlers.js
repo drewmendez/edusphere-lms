@@ -6,9 +6,10 @@ import {
 } from "./enrollments.services.js";
 
 export const handleEnrollToClass = async (req, res) => {
-  const { student_id, class_code } = req.body;
+  const { class_code } = req.body;
+  const student_id = req.user.user_id;
 
-  if (!student_id || !class_code) {
+  if (!class_code) {
     return res.status(400).json({
       success: false,
       message: "All fields are required",
@@ -48,7 +49,7 @@ export const handleEnrollToClass = async (req, res) => {
 
 export const handleUnenrollToClass = async (req, res) => {
   try {
-    const student_id = parseInt(req.params.student_id);
+    const student_id = req.user.user_id;
     const class_id = parseInt(req.params.class_id);
 
     await unenrollToClass(student_id, class_id);

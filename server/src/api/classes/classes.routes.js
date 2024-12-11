@@ -11,7 +11,7 @@ import {
 
 const router = express.Router();
 
-router.get("/user/:user_id", verifyAuthCookie, handleGetClasses);
+router.get("/", verifyAuthCookie, handleGetClasses);
 router.get("/:class_id", verifyAuthCookie, handleGetClass);
 router.get("/people/:class_id", verifyAuthCookie, handleGetPeopleInClass);
 
