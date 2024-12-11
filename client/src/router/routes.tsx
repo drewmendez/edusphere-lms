@@ -4,7 +4,6 @@ import SignUpPage from "@/pages/SignUpPage";
 import { createBrowserRouter } from "react-router-dom";
 import DashboardPage from "@/pages/DashboardPage";
 import ClassStreamPage from "@/pages/ClassStreamPage";
-import ClassPageLayout from "@/layouts/ClassPageLayout";
 import ClassPeoplePage from "@/pages/ClassPeoplePage";
 import ClassAssignmentsPage from "@/pages/ClassAssignmentsPage";
 import AssignmentPage from "@/pages/AssignmentPage";
@@ -16,6 +15,7 @@ import NotReviewedPage from "@/pages/NotReviewedPage";
 import ReviewedPage from "@/pages/ReviewedPage";
 import DashboardLayout from "@/components/layouts/dashboard-layout";
 import ProtectedLayout from "@/components/layouts/protected-layout";
+import ClassLayout from "@/components/layouts/class-layout";
 
 export const router = createBrowserRouter(
   [
@@ -43,7 +43,7 @@ export const router = createBrowserRouter(
           element: <DashboardPage />,
         },
         {
-          element: <ClassPageLayout />,
+          element: <ClassLayout />,
           children: [
             {
               path: "/class/stream/:class_id",

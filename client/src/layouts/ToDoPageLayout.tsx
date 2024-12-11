@@ -1,4 +1,4 @@
-import LayoutNav from "@/components/LayoutNav";
+import LayoutNav from "@/components/content-navbar";
 import { useCurrentUser } from "@/context/CurrentUserContext";
 import { Outlet, useParams } from "react-router-dom";
 

@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 
 import { Button } from "./ui/button";
-
-import CreateClass from "./CreateClass";
-import JoinClass from "./JoinClass";
-import { useCurrentUser } from "@/context/CurrentUserContext";
 import Logo from "./logo";
+
+import { useCurrentUser } from "@/context/CurrentUserContext";
+import CreateClass from "./create-class";
+import JoinClass from "./join-class";
 
 export default function Navbar() {
   return (

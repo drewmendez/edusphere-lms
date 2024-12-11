@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Menu } from "lucide-react";
-import Navbar from "../Navbar";
+
 import Sidebar from "../Sidebar";
 import { cn } from "@/lib/utils";
+import Navbar from "../navbar";
 
 export default function DashboardLayout() {
   const [isOpen, setIsOpen] = useState(true);

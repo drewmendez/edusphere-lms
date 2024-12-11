@@ -1,15 +1,15 @@
 import { Link, useLocation } from "react-router-dom";
 
-interface LayoutNavProps {
+interface ContentNavbarProps {
   navlinks: { text: string; path: string }[];
   id?: string;
 }
 
-export default function LayoutNav({ navlinks, id }: LayoutNavProps) {
+export default function ContentNavbar({ navlinks, id }: ContentNavbarProps) {
   const { pathname } = useLocation();
 
   return (
-    <nav className="sticky inset-x-0 top-[68px] flex border-b-2 bg-bgWhite px-7">
+    <>
       {navlinks.map((navLink, index) => (
         <Link key={index} to={id ? navLink.path + id : navLink.path}>
           <p
@@ -19,6 +19,6 @@ export default function LayoutNav({ navlinks, id }: LayoutNavProps) {
           </p>
         </Link>
       ))}
-    </nav>
+    </>
   );
 }
