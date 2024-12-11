@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import FormField from "./FormField";
+import FormField from "./form-field";
 import { Button } from "./ui/button";
 
 import { type SignInForm, SignInFormSchema } from "@/types/types";

@@ -8,14 +8,14 @@ import ClassPeoplePage from "@/pages/ClassPeoplePage";
 import ClassAssignmentsPage from "@/pages/ClassAssignmentsPage";
 import AssignmentPage from "@/pages/AssignmentPage";
 import AssignedPage from "@/pages/AssignedPage";
-import ToDoPageLayout from "@/layouts/ToDoPageLayout";
 import DonePage from "@/pages/DonePage";
-import ToReviewPageLayout from "@/layouts/ToReviewPageLayout";
 import NotReviewedPage from "@/pages/NotReviewedPage";
 import ReviewedPage from "@/pages/ReviewedPage";
 import DashboardLayout from "@/components/layouts/dashboard-layout";
 import ProtectedLayout from "@/components/layouts/protected-layout";
 import ClassLayout from "@/components/layouts/class-layout";
+import ToReviewLayout from "@/components/layouts/to-review-layout";
+import TodoLayout from "@/components/layouts/todo-layout";
 
 export const router = createBrowserRouter(
   [
@@ -64,7 +64,7 @@ export const router = createBrowserRouter(
           ],
         },
         {
-          element: <ToReviewPageLayout />,
+          element: <ToReviewLayout />,
           children: [
             {
               path: "/to-review/not-reviewed/:filter",
@@ -77,7 +77,7 @@ export const router = createBrowserRouter(
           ],
         },
         {
-          element: <ToDoPageLayout />,
+          element: <TodoLayout />,
           children: [
             {
               path: "/to-do/assigned/:filter",

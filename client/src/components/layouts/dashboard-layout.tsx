@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Menu } from "lucide-react";
 
-import Sidebar from "../Sidebar";
+import Sidebar from "../sidebar";
 import { cn } from "@/lib/utils";
 import Navbar from "../navbar";
 

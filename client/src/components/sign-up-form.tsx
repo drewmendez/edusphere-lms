@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 
-import FormField from "./FormField";
+import FormField from "./form-field";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 

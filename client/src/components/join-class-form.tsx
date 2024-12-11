@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 
 import { Button } from "./ui/button";
-import FormField from "./FormField";
+import FormField from "./form-field";
 
 import { useCurrentUser } from "@/context/CurrentUserContext";
 import { EnrollmentForm, EnrollmentFormSchema } from "@/types/types";

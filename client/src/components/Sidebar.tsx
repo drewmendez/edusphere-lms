@@ -2,7 +2,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { ChevronRight, GraduationCap, User, UserRoundPen } from "lucide-react";
 
-import SignOutDialog from "./SignOutDialog";
+import SignOutDialog from "./signout-dialog";
 import { cn } from "@/lib/utils";
 import { SIDEBAR_ITEMS } from "@/constants/sidebar-items";
 import { useCurrentUser } from "@/context/CurrentUserContext";
