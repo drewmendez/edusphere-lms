@@ -2,7 +2,6 @@ import HomePage from "@/pages/HomePage";
 import SignInPage from "@/pages/SignInPage";
 import SignUpPage from "@/pages/SignUpPage";
 import { createBrowserRouter } from "react-router-dom";
-import ProtectedRouteLayout from "../layouts/ProtectedRouteLayout";
 import DashboardPage from "@/pages/DashboardPage";
 import ClassStreamPage from "@/pages/ClassStreamPage";
 import ClassPageLayout from "@/layouts/ClassPageLayout";
@@ -15,6 +14,8 @@ import DonePage from "@/pages/DonePage";
 import ToReviewPageLayout from "@/layouts/ToReviewPageLayout";
 import NotReviewedPage from "@/pages/NotReviewedPage";
 import ReviewedPage from "@/pages/ReviewedPage";
+import DashboardLayout from "@/components/layouts/dashboard-layout";
+import ProtectedLayout from "@/components/layouts/protected-layout";
 
 export const router = createBrowserRouter(
   [
@@ -31,7 +32,11 @@ export const router = createBrowserRouter(
       element: <SignInPage />,
     },
     {
-      element: <ProtectedRouteLayout />,
+      element: (
+        <ProtectedLayout>
+          <DashboardLayout />
+        </ProtectedLayout>
+      ),
       children: [
         {
           path: "/dashboard",

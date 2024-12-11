@@ -1,6 +1,6 @@
-import { useCurrentUser } from "@/context/CurrentUserContext";
 import { PropsWithChildren } from "react";
 import { Navigate } from "react-router-dom";
+import { useCurrentUser } from "@/context/CurrentUserContext";
 
 type AuthLayoutProps = PropsWithChildren;
 
