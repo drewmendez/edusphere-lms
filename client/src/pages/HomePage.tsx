@@ -1,19 +1,13 @@
 import Navbar from "@/components/Navbar";
 import HomeImage from "../assets/home-image.jpg";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { useCurrentUser } from "@/context/CurrentUserContext";
+import AuthLayout from "@/components/layouts/auth-layout";
 
 export default function HomePage() {
-  const { currentUser } = useCurrentUser();
-
-  if (currentUser) {
-    return <Navigate to="/dashboard" replace />;
-  }
-
   return (
-    <>
+    <AuthLayout>
       <header className="fixed inset-x-0 top-0 bg-bgWhite py-4 shadow">
         <div className="container">
           <Navbar />
@@ -34,16 +28,21 @@ export default function HomePage() {
                 classes, assignments, and progress — simplifying education for
                 everyone.
               </p>
-
-              <Button size="lg">
-                <Link className="flex items-center gap-2" to="/sign-in">
-                  Get Started <ArrowRight />
-                </Link>
-              </Button>
+              <Cta />
             </div>
           </section>
         </div>
       </main>
-    </>
+    </AuthLayout>
+  );
+}
+
+function Cta() {
+  return (
+    <Button size="lg">
+      <Link className="flex items-center gap-2" to="/sign-in">
+        Get Started <ArrowRight />
+      </Link>
+    </Button>
   );
 }
