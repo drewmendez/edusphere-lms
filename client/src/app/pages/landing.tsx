@@ -1,9 +1,9 @@
-import Navbar from "@/components/navbar";
+import Navbar from "@/app/layouts/navbar";
 import LandingImage from "@/assets/home-image.jpg";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import AuthLayout from "@/components/layouts/auth-layout";
+import AuthLayout from "@/app/layouts/auth-layout";
 
 export default function LandingPage() {
   return (

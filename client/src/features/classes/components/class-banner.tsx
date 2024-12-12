@@ -1,9 +1,22 @@
 import { useCurrentUser } from "@/context/CurrentUserContext";
 import { useGetClass } from "../queries/use-get-class";
+import { useEffect } from "react";
 
-export default function ClassBanner({ class_id }: { class_id: number }) {
+interface ClassBannerProps {
+  class_id: number;
+  setAccentColor: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function ClassBanner({
+  class_id,
+  setAccentColor,
+}: ClassBannerProps) {
   const { currentUser } = useCurrentUser();
   const { data: classData } = useGetClass(class_id);
+
+  useEffect(() => {
+    setAccentColor(classData?.banner_color!);
+  }, [classData]);
 
   return (
     <div

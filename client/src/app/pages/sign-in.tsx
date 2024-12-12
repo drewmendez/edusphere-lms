@@ -1,4 +1,4 @@
-import AuthLayout from "@/components/layouts/auth-layout";
+import AuthLayout from "@/app/layouts/auth-layout";
 import SignFormCard from "@/features/authentication/signform-card";
 import SignInForm from "@/features/authentication/sign-in-form";
 

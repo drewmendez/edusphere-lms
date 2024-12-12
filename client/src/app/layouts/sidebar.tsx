@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { User } from "lucide-react";
 
-import SignOutDialog from "./signout-dialog";
+import SignOutDialog from "@/features/authentication/signout-dialog";
 import { cn } from "@/lib/utils";
 import { SIDEBAR_ITEMS } from "@/constants/sidebar-items";
 import { useCurrentUser } from "@/context/CurrentUserContext";

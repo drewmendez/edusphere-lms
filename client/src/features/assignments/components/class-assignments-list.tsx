@@ -21,6 +21,7 @@ export default function ClassAssignmentsList({
           key={assignment.assignment_id}
           class_id={class_id}
           assignment_id={assignment.assignment_id}
+          accentColor={assignment.banner_color!}
         >
           <div className="flex w-full items-center justify-between">
             <p className="font-semibold">{assignment.title}</p>

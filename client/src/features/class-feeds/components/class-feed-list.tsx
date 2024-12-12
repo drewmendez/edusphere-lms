@@ -4,9 +4,13 @@ import AnnouncementCard from "./announcement-card";
 
 interface ClassFeedListProps {
   class_id: number;
+  accentColor: string;
 }
 
-export default function ClassFeedList({ class_id }: ClassFeedListProps) {
+export default function ClassFeedList({
+  class_id,
+  accentColor,
+}: ClassFeedListProps) {
   const { data: classFeeds } = useGetClassFeeds(class_id);
 
   return (
@@ -17,6 +21,7 @@ export default function ClassFeedList({ class_id }: ClassFeedListProps) {
             key={classFeed.feed_id}
             assignment_id={classFeed.id}
             class_id={class_id}
+            accentColor={accentColor}
           >
             <div className="flex w-full items-center justify-between">
               <p>

@@ -11,11 +11,11 @@ import AssignedPage from "@/app/pages/assigned";
 import DonePage from "@/app/pages/done";
 import NotReviewedPage from "@/app/pages/not-reviewed";
 import ReviewedPage from "@/app/pages/reviewed";
-import DashboardLayout from "@/components/layouts/dashboard-layout";
-import ProtectedLayout from "@/components/layouts/protected-layout";
-import ClassLayout from "@/components/layouts/class-layout";
-import ToReviewLayout from "@/components/layouts/to-review-layout";
-import TodoLayout from "@/components/layouts/todo-layout";
+import DashboardLayout from "@/app/layouts/dashboard-layout";
+import ProtectedLayout from "@/app/layouts/protected-layout";
+import ClassLayout from "@/app/layouts/class-layout";
+import ToReviewLayout from "@/app/layouts/to-review-layout";
+import TodoLayout from "@/app/layouts/todo-layout";
 
 export const router = createBrowserRouter(
   [

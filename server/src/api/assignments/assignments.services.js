@@ -160,9 +160,10 @@ export const getAssignmentSubmissionData = async (assignment_id, class_id) => {
 
 export const getAssignmentsInClass = async (class_id) => {
   const query = `
-    SELECT assignment_id, title, created_at
-    FROM assignments
-    WHERE class_id = ?
+    SELECT a.assignment_id, a.title, a.created_at, c.banner_color
+    FROM assignments a
+    JOIN classes c ON a.class_id = c.class_id
+    WHERE a.class_id = ?
     ORDER BY created_at DESC
   `;
   const values = [class_id];

@@ -1,5 +1,5 @@
 import { Outlet, useParams } from "react-router-dom";
-import ContentNavbar from "../content-navbar";
+import ContentNavbar from "../../components/content-navbar";
 import { CLASS_NAVBAR_LINKS } from "@/constants/content-navbar-links";
 
 export default function ClassLayout() {

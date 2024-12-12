@@ -27,6 +27,7 @@ function AssignmentCard({
   class_subject,
   class_section,
   assignment_id,
+  banner_color,
 }: AssignmentCardProps) {
   const { data: submissionData, isFetching } = useGetAssignmentSubmissionData(
     assignment_id,
@@ -58,7 +59,11 @@ function AssignmentCard({
   }
 
   return (
-    <AssignmentContainer class_id={class_id!} assignment_id={assignment_id}>
+    <AssignmentContainer
+      class_id={class_id!}
+      assignment_id={assignment_id}
+      accentColor={banner_color!}
+    >
       <div className="flex w-full items-center justify-between">
         <div>
           <p className="font-semibold">{title}</p>

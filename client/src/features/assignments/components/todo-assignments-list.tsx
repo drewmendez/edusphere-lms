@@ -30,9 +30,14 @@ function AssignmentCard({
   submitted_at,
   points,
   given_points,
+  banner_color,
 }: AssignmentCardProps) {
   return (
-    <AssignmentContainer class_id={class_id!} assignment_id={assignment_id}>
+    <AssignmentContainer
+      class_id={class_id!}
+      assignment_id={assignment_id}
+      accentColor={banner_color!}
+    >
       <div className="flex w-full items-center justify-between">
         <div>
           <p className="font-semibold">{title}</p>
