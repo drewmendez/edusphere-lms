@@ -11,7 +11,7 @@ export default function DashboardLayout() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-10 flex gap-6 bg-bgWhite px-8 py-4 shadow">
+      <header className="fixed inset-x-0 top-0 z-10 flex gap-6 border-b-2 bg-background px-8 py-4">
         <button onClick={() => setIsOpen(!isOpen)}>
           <Menu />
         </button>
@@ -21,7 +21,7 @@ export default function DashboardLayout() {
       </header>
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-10 mt-[68px] overflow-hidden overflow-y-auto pt-5 shadow transition-all",
+          "fixed inset-y-0 left-0 z-10 mt-[68px] overflow-hidden overflow-y-auto border-r-2 pt-5 transition-all",
           isOpen ? "w-[310px]" : "w-[82px]",
         )}
       >
@@ -29,7 +29,7 @@ export default function DashboardLayout() {
       </aside>
       <main
         className={cn(
-          "flex min-h-screen bg-bgWhite pt-[68px] transition-all",
+          "flex min-h-screen pt-[68px] transition-all",
           isOpen ? "pl-[310px]" : "pl-[82px]",
         )}
       >

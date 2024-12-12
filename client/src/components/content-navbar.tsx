@@ -13,7 +13,7 @@ export default function ContentNavbar({ navlinks, id }: ContentNavbarProps) {
       {navlinks.map((navLink, index) => (
         <Link key={index} to={id ? navLink.path + id : navLink.path}>
           <p
-            className={`px-7 py-4 transition hover:bg-slate-200 ${pathname.includes(navLink.path) && "border-b-2 border-b-blue-700 text-blue-700"}`}
+            className={`px-7 py-4 transition hover:bg-muted ${pathname.includes(navLink.path) && "border-b-2 border-b-primary text-primary"}`}
           >
             {navLink.text}
           </p>

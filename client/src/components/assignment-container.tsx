@@ -16,7 +16,7 @@ export default function AssignmentContainer({
 }: AssignmentCardProps) {
   return (
     <Link to={`/class/assignments/${class_id}/${assignment_id}`}>
-      <div className="flex items-center gap-5 rounded-lg border px-5 py-3 shadow transition-all hover:shadow-md">
+      <div className="flex items-center gap-5 rounded-lg px-5 py-3 ring-2 ring-border transition-all hover:ring-foreground">
         <div
           className="rounded-full p-2 text-white"
           style={{ background: accentColor }}

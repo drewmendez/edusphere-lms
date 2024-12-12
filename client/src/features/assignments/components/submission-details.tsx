@@ -80,26 +80,24 @@ function TeacherView({ assignment_id }: ViewProps) {
         {submissions?.map((submission) => (
           <div
             key={submission.user_id}
-            className="relative rounded-lg bg-gray-200 p-3"
+            className="relative rounded-lg bg-muted p-3"
           >
             <div className="flex justify-between">
               <div>
                 <p>{submission.student_name}</p>
-                <p className="text-xs text-gray-500">
-                  {submission.submitted_at}
-                </p>
+                <p className="text-xs">{submission.submitted_at}</p>
               </div>
               {submission.given_points ? (
                 <div className="text-right">
-                  <p className="text-xs text-gray-500">Marked</p>
+                  <p className="text-xs font-semibold">Marked</p>
                   <p className="text-sm">
                     {submission.given_points}/{submission.points}
                   </p>
                 </div>
               ) : submission.answer ? (
-                <p className="text-xs text-gray-500">Handed in</p>
+                <p className="text-xs">Handed in</p>
               ) : (
-                <p className="text-xs text-gray-500">Assigned</p>
+                <p className="text-xs">Assigned</p>
               )}
             </div>
 
@@ -112,7 +110,7 @@ function TeacherView({ assignment_id }: ViewProps) {
             )}
 
             {submission.answer && (
-              <p className="mt-2 whitespace-pre-wrap border-t-2 border-t-white pt-2">
+              <p className="mt-2 whitespace-pre-wrap border-t border-t-foreground pt-2">
                 {submission.answer}
               </p>
             )}
@@ -149,11 +147,11 @@ function StudentView({ assignment_id }: ViewProps) {
       {submission ? (
         <>
           <p className="text-3xl">Your work</p>
-          <div className="divide-y-2 divide-gray-50 rounded-lg bg-gray-200 p-5">
+          <div className="divide-y divide-foreground rounded-lg bg-muted p-5">
             <div className="flex items-center justify-between pb-2">
               <p className="text-xs">Submitted on {submission.submitted_at}</p>
               {submission.given_points ? (
-                <p className="text-xs">
+                <p className="text-xs font-semibold">
                   Marked{" "}
                   <span className="font-semibold">
                     {submission.given_points}/{submission.points}

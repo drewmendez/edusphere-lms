@@ -5,7 +5,7 @@ import SignUpForm from "@/features/authentication/sign-up-form";
 export default function SignUpPage() {
   return (
     <AuthLayout>
-      <main className="h-screen bg-bgWhite">
+      <main className="h-screen">
         <div className="container flex h-full items-center justify-center">
           <SignFormCard
             title="Sign up to continue"

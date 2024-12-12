@@ -31,7 +31,7 @@ export default function ClassesDropdown({
     <>
       <button
         className={cn(
-          "mr-3 flex items-center overflow-hidden rounded-br-full rounded-tr-full py-3 pl-2 transition hover:bg-slate-200",
+          "mr-3 flex items-center overflow-hidden rounded-br-full rounded-tr-full py-3 pl-2 transition hover:bg-muted",
           !isOpen && "pointer-events-none",
         )}
         onClick={() => {
@@ -81,8 +81,8 @@ function ClassLink({
   return (
     <Link
       className={cn(
-        "mr-3 flex items-center gap-7 overflow-hidden rounded-br-full rounded-tr-full py-2 pl-7 text-sm transition hover:bg-slate-200",
-        paramId === class_id && pathname.includes("class") && "bg-blue-100",
+        "mr-3 flex items-center gap-7 overflow-hidden rounded-br-full rounded-tr-full py-2 pl-7 text-sm transition hover:bg-muted",
+        paramId === class_id && pathname.includes("class") && "bg-muted",
       )}
       to={`/class/stream/${class_id}`}
     >

@@ -28,7 +28,7 @@ export default function SignFormCard({
       </CardHeader>
       <CardContent>{children}</CardContent>
       <CardFooter className="flex justify-center">
-        <Link className="text-xs text-slate-700 hover:underline" to={link}>
+        <Link className="text-xs hover:underline" to={link}>
           {footer}
         </Link>
       </CardFooter>

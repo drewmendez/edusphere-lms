@@ -31,7 +31,7 @@ export default function SignOutDialog() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <button className="mr-3 flex items-center gap-7 overflow-hidden rounded-br-full rounded-tr-full py-3 pl-8 transition hover:bg-red-100">
+        <button className="mr-3 flex items-center gap-7 overflow-hidden rounded-br-full rounded-tr-full py-3 pl-8 transition hover:bg-muted">
           <div>
             <LogOut />
           </div>

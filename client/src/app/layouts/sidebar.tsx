@@ -44,7 +44,7 @@ export default function Sidebar({ isOpen }: SidebarProps) {
 function UserDetails({ role, user }: { role: string; user: string }) {
   return (
     <div className="flex items-center gap-5 pl-6">
-      <div className="w-min rounded-full bg-gray-300 p-2">
+      <div className="w-min rounded-full bg-muted p-2">
         <User />
       </div>
       <div className="flex-shrink-0">
@@ -66,8 +66,8 @@ function SidebarLink({ text, link, icon, pathname }: SidebarLinkProps) {
   return (
     <Link
       className={cn(
-        "mr-3 flex items-center gap-7 overflow-hidden rounded-br-full rounded-tr-full py-3 pl-8 transition hover:bg-slate-200",
-        pathname.includes(link) && "bg-blue-100",
+        "mr-3 flex items-center gap-7 overflow-hidden rounded-br-full rounded-tr-full py-3 pl-8 transition hover:bg-muted",
+        pathname.includes(link) && "bg-muted text-primary",
       )}
       to={link}
     >

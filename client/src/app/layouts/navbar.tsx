@@ -6,12 +6,16 @@ import Logo from "@/components/logo";
 import { useCurrentUser } from "@/context/CurrentUserContext";
 import CreateClass from "@/features/classes/components/create-class";
 import JoinClass from "@/features/classes/components/join-class";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export default function Navbar() {
   return (
     <nav className="flex items-center justify-between">
       <Logo />
-      <Navigations />
+      <div className="flex items-center gap-4">
+        <Navigations />
+        <ModeToggle />
+      </div>
     </nav>
   );
 }

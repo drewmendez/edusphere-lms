@@ -24,7 +24,7 @@ export default function ClassCard({
   const { currentUser } = useCurrentUser();
 
   return (
-    <div className="flex h-[296px] w-[302px] flex-col overflow-hidden rounded-xl border-2 transition hover:shadow-md">
+    <div className="hover: flex h-[296px] w-[302px] flex-col overflow-hidden rounded-xl ring-2 ring-border transition hover:ring-foreground">
       <div
         className="flex justify-between p-5 text-white"
         style={{ background: banner_color }}
@@ -68,13 +68,13 @@ export default function ClassCard({
       <div className="flex flex-1 flex-col justify-between p-5 text-slate-600"></div>
       <div className="flex justify-end gap-1 border-t-2 px-2 py-1">
         <Link
-          className="rounded-full p-3 transition hover:bg-slate-200"
+          className="rounded-full p-3 transition hover:bg-muted"
           to={`/class/assignments/${class_id}`}
         >
           <ClipboardList />
         </Link>
         <Link
-          className="rounded-full p-3 transition hover:bg-slate-200"
+          className="rounded-full p-3 transition hover:bg-muted"
           to={`/class/people/${class_id}`}
         >
           <Users />

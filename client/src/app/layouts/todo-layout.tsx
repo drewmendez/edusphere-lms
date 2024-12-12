@@ -12,7 +12,7 @@ export default function TodoLayout() {
 
   return (
     <div className="relative w-full">
-      <nav className="sticky inset-x-0 top-[68px] flex border-b-2 bg-bgWhite px-7">
+      <nav className="sticky inset-x-0 top-[68px] flex border-b-2 px-7">
         <ContentNavbar navlinks={TODO_NAVBAR_LINKS} />
       </nav>
       <div className="flex w-full items-center justify-center p-6">
