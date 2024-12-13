@@ -58,16 +58,17 @@ function UserDetails({ role, user }: { role: string; user: string }) {
 interface SidebarLinkProps {
   text: string;
   link: string;
+  page: string;
   icon: ReactElement;
   pathname: string;
 }
 
-function SidebarLink({ text, link, icon, pathname }: SidebarLinkProps) {
+function SidebarLink({ text, link, page, icon, pathname }: SidebarLinkProps) {
   return (
     <Link
       className={cn(
         "mr-3 flex items-center gap-7 overflow-hidden rounded-br-full rounded-tr-full py-3 pl-8 transition hover:bg-muted",
-        pathname.includes(link) && "bg-muted text-primary",
+        pathname.includes(page) && "bg-muted text-primary",
       )}
       to={link}
     >
