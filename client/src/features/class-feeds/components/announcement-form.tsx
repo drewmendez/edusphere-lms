@@ -30,7 +30,7 @@ export default function AnnouncementForm({ class_id }: { class_id: number }) {
   return (
     <form
       className={cn(
-        "h-[62px] cursor-pointer overflow-hidden rounded-xl border p-5 text-slate-400 shadow transition duration-75 hover:text-black",
+        "h-[62px] cursor-pointer overflow-hidden rounded-xl border p-5 text-slate-400 shadow transition duration-75 hover:text-foreground",
         isOpen && "h-auto cursor-default",
       )}
       onClick={() => setIsOpen(true)}
